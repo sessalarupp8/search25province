@@ -1,0 +1,87 @@
+body {
+  font-family: "Khmer OS Battambang", "Khmer OS Siemreap", Arial, sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6dd5ed, #2193b0);
+}
+
+.big-box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 800px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 20px;
+}
+
+.small-box-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.small-box {
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 15px;
+  flex: 1;
+  min-width: 220px;
+  box-sizing: border-box;
+  /* Fixed width for a uniform layout. Adjust as needed. */
+  width: 300px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #444;
+}
+
+/* Make Select2 dropdowns and input boxes uniform */
+.select2-container {
+  /* Forces the main select box to have a fixed width */
+  width: 300px !important; 
+}
+
+.select2-container--default .select2-selection--single {
+  height: 50px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 32px; /* vertical center text */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  top: 12px;
+}
+
+/* Ensure the dropdown matches the width of the input box */
+.select2-container--default .select2-dropdown {
+  min-width: 300px !important;
+  width: 300px !important;     
+}
+
+/* Set the max height for the options list */
+.select2-container--default .select2-results__options {
+  max-height: 250px;
+  overflow-y: auto;
+}
