@@ -1,5 +1,4 @@
-/* Update your existing CSS to be more flexible and responsive */
-
+/* General body and layout */
 body {
   font-family: "Khmer OS Battambang", "Khmer OS Siemreap", Arial, sans-serif;
   margin: 0;
@@ -41,7 +40,6 @@ h2 {
   flex: 1;
   min-width: 220px;
   box-sizing: border-box;
-  /* Removed fixed width to allow for flexible sizing */
 }
 
 label {
@@ -51,47 +49,64 @@ label {
   color: #444;
 }
 
-/* Update Select2 CSS for responsive and clean alignment */
-/* Ensure the Select2 container always fits its parent (.small-box) */
+/* (keep your existing layout styles above) */
+
+/* Ensure select input fills the small-box */
 .select2-container {
-  width: 100% !important; /* Use 100% to fill the parent width */
+  width: 100% !important;
 }
 
-/* Style the Select2 input box */
+/* Selected value (input box) - single line with ellipsis */
 .select2-container--default .select2-selection--single {
   height: 50px;
   padding: 10px;
-  font-size: 16px;
   border-radius: 10px;
-  /* Use flexbox for reliable vertical centering */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-/* Style the text inside the input box */
+/* Center the selected value text */
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  line-height: normal; /* Reset line-height */
+  text-align: center;        /* center text */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1; /* Allow text to take up available space */
+  flex: 1;
+  margin-right: 20px;        /* give space so text doesn’t overlap arrow */
 }
 
+/* Keep arrow aligned to right edge */
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: 100%;
-  position: relative; /* Position relative to the parent flex container */
-  top: auto; /* Reset fixed position */
-  right: auto; /* Reset fixed position */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* Make the dropdown panel match the width of the input box */
+
+/* Ensure dropdown is above other elements */
 .select2-container--default .select2-dropdown {
-  width: 100% !important; /* Forces the dropdown to match its parent's width */
+  position: absolute !important;
+  z-index: 9999;
+  box-sizing: border-box;
+  max-width: none !important; /* width will be set by JS to match small-box */
+  /* do not force width here — JS will set it so it aligns exactly */
 }
 
-/* Set the max height for the options list */
+/* Dropdown options - single line + ellipsis */
+.select2-container--default .select2-results__option {
+  white-space: nowrap;        /* single line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+  padding-right: 12px; /* give some room for scrollbar/arrow */
+}
+
+/* Limit the options list height */
 .select2-container--default .select2-results__options {
   max-height: 250px;
   overflow-y: auto;
+  box-sizing: border-box;
 }
