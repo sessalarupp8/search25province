@@ -32,7 +32,7 @@ const districts = [
   // Phnom Penh (id: 1)
   { id: 101, name: "ខណ្ឌ ដូនពេញ", provinceId: 1 },
   { id: 102, name: "ខណ្ឌ ចំការមន", provinceId: 1 },
-  { id: 103, name: "ខណ្ឌ ៧មករា", provinceId: 1 },
+  { id: 103, name: "ខណ្ឌ ៧ មករា", provinceId: 1 },
   { id: 104, name: "ខណ្ឌ ទួលគោក", provinceId: 1 },
   { id: 105, name: "ខណ្ឌ ដង្កោ", provinceId: 1 },
   { id: 106, name: "ខណ្ឌ មានជ័យ", provinceId: 1 },
@@ -42,9 +42,6 @@ const districts = [
   { id: 110, name: "ខណ្ឌ ព្រែកព្នៅ", provinceId: 1 },
   { id: 111, name: "ខណ្ឌ ជ្រោយចង្វារ", provinceId: 1 },
   { id: 112, name: "ខណ្ឌ ស្ទឹងមានជ័យ", provinceId: 1 },
-  { id: 113, name: "ខណ្ឌ បឹងកេងកង", provinceId: 1 },
-  { id: 114, name: "ខណ្ឌ ព្រែកព្នៅ", provinceId: 1 },
-  { id: 115, name: "ខណ្ឌ កំបូល", provinceId: 1 },
   // Battambang (id: 2)
   { id: 201, name: "ស្រុក បាណន់", provinceId: 2 },
   { id: 202, name: "ស្រុក ថ្មពួក", provinceId: 2 },
