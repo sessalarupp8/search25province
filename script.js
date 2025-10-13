@@ -2,6 +2,11 @@ $(document).ready(function () {
   const $province = $('#provinceSelect');
   const $district = $('#districtSelect');
   const $commune = $('#communeSelect');
+  const $addressContent = $('#addressContent');
+  const $copyButton = $('#copyButton');
+  const DEFAULT_ADDRESS_TEXT = "សូមជ្រើសរើស ឃុំ/សង្កាត់ ស្រុក/ខណ្ឌ និង រាជធានី/ខេត្ត";
+
+  // --- Utility Functions ---
 
   // Populate provinces (if not already populated)
   if (typeof provinces !== 'undefined') {
@@ -70,12 +75,39 @@ $(document).ready(function () {
     });
   }
 
+  // --- UPDATED CORE FUNCTION: Update Address Output (using double space) ---
+  function updateFullAddress() {
+    // Get the name of the selected item, or null if nothing is selected
+    const provinceName = $province.val() ? $province.find('option:selected').text() : null;
+    const districtName = $district.val() ? $district.find('option:selected').text() : null;
+    const communeName = $commune.val() ? $commune.find('option:selected').text() : null;
+    
+    // Check if all three levels are selected
+    if (communeName && districtName && provinceName) {
+      // **THE CHANGE IS HERE: Separating with double spaces ('  ')**
+      const fullAddress = `${communeName}  ${districtName}  ${provinceName}`;
+      
+      $addressContent.text(fullAddress);
+      $copyButton.prop('disabled', false); // Enable copy button
+      
+    } else {
+      // Display the default message and disable the button
+      $addressContent.text(DEFAULT_ADDRESS_TEXT);
+      $copyButton.prop('disabled', true);
+    }
+  }
+
+  // --- Initialization ---
+
   // Initialize all three selects
   setupSelect2($province);
   setupSelect2($district);
   setupSelect2($commune);
+  updateFullAddress(); // Set initial state
 
-  // Province -> District -> Commune dependent dropdown
+  // --- Dependent Dropdown Logic & Address Update ---
+
+  // Province -> District dependent dropdown
   $province.on("change", function () {
     const selectedProvinceId = $(this).val();
 
@@ -92,6 +124,7 @@ $(document).ready(function () {
 
     $district.val(null).trigger('change');
     $commune.val(null).trigger('change');
+    updateFullAddress(); // Update address output
   });
 
   // District -> Commune dependent dropdown
@@ -109,6 +142,35 @@ $(document).ready(function () {
     }
 
     $commune.val(null).trigger('change');
+    updateFullAddress(); // Update address output
+  });
+  
+  // Commune selection is the final trigger for a complete address
+  $commune.on("change", function() {
+      updateFullAddress();
+  });
+
+  // --- Copy to Clipboard Functionality ---
+  
+  $copyButton.on('click', function() {
+    const textToCopy = $addressContent.text();
+    
+    if (textToCopy && !$copyButton.prop('disabled')) {
+        // Use the modern navigator.clipboard API
+        navigator.clipboard.writeText(textToCopy).then(function() {
+            // Change button text temporarily to confirm copy
+            const originalText = $copyButton.text();
+            $copyButton.text('✓ ចម្លងរួចរាល់'); 
+            
+            setTimeout(function() {
+                $copyButton.text(originalText);
+            }, 1500); // Revert back after 1.5 seconds
+            
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+            alert('បរាជ័យក្នុងការចម្លង។ សូមចម្លងដោយដៃ។');
+        });
+    }
   });
 
   // OPTIONAL: close any open Select2 if user scrolls the page

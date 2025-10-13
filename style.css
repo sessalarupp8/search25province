@@ -29,7 +29,7 @@ h2 {
 
 .small-box-container {
   display: flex;
-  flex-wrap: wrap; /* Updated to allow wrapping */
+  flex-wrap: wrap; 
   gap: 30px; 
   justify-content: center;
   align-items: flex-start;
@@ -106,4 +106,59 @@ label {
 .select2-container--default .select2-results__option--highlighted {
   background-color: #e6f7ff;
   color: #2193b0;
+}
+
+/* --- New Styles for Output Container --- */
+
+.output-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-top: 40px; /* Space from the dropdown boxes */
+    padding: 18px 25px;
+    background-color: #f0f8ff; /* Light background */
+    border-radius: 12px;
+    border: 1px solid #cceeff; 
+    text-align: left;
+}
+
+.address-text {
+    font-size: 16px;
+    color: #333;
+    flex: 1; 
+    padding-right: 10px; 
+    word-break: break-word; 
+}
+
+.address-prefix {
+    font-weight: bold; 
+    margin-right: 8px;
+    color: #555;
+}
+
+#addressContent {
+    font-weight: 500; 
+    color: #007bff; 
+}
+
+.copy-button {
+    background-color: #007bff; /* Primary blue for the button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.copy-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.copy-button:disabled {
+    background-color: #cccccc; /* Grey when disabled */
+    cursor: not-allowed;
 }
