@@ -554,349 +554,84 @@ const communes = [
   // Srok Sandan (id: 808)
   { id: 80801, name: "ឃុំសណ្ដាន់", districtId: 808 },
   { id: 80802, name: "ឃុំកំពង់ស្វាយ", districtId: 808 },
-  // Srok Koh Thum (id: 901)
+  // Kandal (id: 9)
   { id: 90101, name: "ឃុំកោះធំ", districtId: 901 },
   { id: 90102, name: "ឃុំព្រែកស្តី", districtId: 901 },
-  // Srok Kandal Stueng (id: 902)
   { id: 90201, name: "ឃុំកណ្តាលស្ទឹង", districtId: 902 },
   { id: 90202, name: "ឃុំកៀនស្វាយ", districtId: 902 },
-  // Srok Kien Svay (id: 903)
   { id: 90301, name: "ឃុំកៀនស្វាយ", districtId: 903 },
   { id: 90302, name: "ឃុំតាខ្មៅ", districtId: 903 },
-  // Srok Sa'ang (id: 904)
   { id: 90401, name: "ឃុំស្អាង", districtId: 904 },
   { id: 90402, name: "ឃុំព្រែក", districtId: 904 },
-  // Krong Ta Khmau (id: 905)
   { id: 90501, name: "សង្កាត់តាខ្មៅ", districtId: 905 },
   { id: 90502, name: "សង្កាត់កំពង់", districtId: 905 },
-  // Srok Angk Snuol (id: 906)
   { id: 90601, name: "ឃុំអង្គស្នួល", districtId: 906 },
   { id: 90602, name: "ឃុំគគរ", districtId: 906 },
-  // Srok Khsach Kandal (id: 907)
   { id: 90701, name: "ឃុំខ្សាច់កណ្ដាល", districtId: 907 },
   { id: 90702, name: "ឃុំកោះ", districtId: 907 },
-  // Srok Leuk Daek (id: 908)
   { id: 90801, name: "ឃុំលើកដែក", districtId: 908 },
   { id: 90802, name: "ឃុំព្រែកអណ្ដូង", districtId: 908 },
-  // Srok Ponhea Leu (id: 909)
   { id: 90901, name: "ឃុំពញាឭ", districtId: 909 },
   { id: 90902, name: "ឃុំកោះអណ្ដែត", districtId: 909 },
-  // Srok Sa'ang (id: 910)
   { id: 91001, name: "ឃុំស្អាង", districtId: 910 },
   { id: 91002, name: "ឃុំកោះ", districtId: 910 },
-  // Srok Mukh Kampoul (id: 911)
   { id: 91101, name: "ឃុំមុខកំពូល", districtId: 911 },
   { id: 91102, name: "ឃុំព្រែកអណ្ដូង", districtId: 911 },
-  // Srok Koh Kong (id: 1001)
+  // Koh Kong (id: 1000 series)
   { id: 100101, name: "ឃុំកោះកុង", districtId: 1001 },
   { id: 100102, name: "ឃុំថ្មបាំង", districtId: 1001 },
-  // Srok Srae Ambel (id: 1002)
+  // Srae Ambel
   { id: 100201, name: "ឃុំស្រែអំបិល", districtId: 1002 },
   { id: 100202, name: "ឃុំដីក្រហម", districtId: 1002 },
-  // Srok Koh Sralao (id: 1003)
-  { id: 100301, name: "ឃុំកោះស្រឡៅ", districtId: 1003 },
-  { id: 100302, name: "ឃុំស្រែ", districtId: 1003 },
-  // Krong Khemarak Phoumin (id: 1004)
+  // Krong Khemarak Phoumin
   { id: 100401, name: "សង្កាត់ដងទង់", districtId: 1004 },
   { id: 100402, name: "សង្កាត់ព្រែក", districtId: 1004 },
-  // Srok Botum Sakor (id: 1005)
-  { id: 100501, name: "ឃុំបូទុមសាគរ", districtId: 1005 },
-  { id: 100502, name: "ឃុំដីក្រហម", districtId: 1005 },
-  // Srok Thma Bang (id: 1006)
-  { id: 100601, name: "ឃុំថ្មបាំង", districtId: 1006 },
-  { id: 100602, name: "ឃុំស្រែ", districtId: 1006 },
-  // Krong Kaeb (id: 1101)
+  // Kep (id: 1100 series)
   { id: 110101, name: "សង្កាត់កែប", districtId: 1101 },
   { id: 110102, name: "សង្កាត់ព្រែក", districtId: 1101 },
-  // Srok Damnak Changaeur (id: 1102)
+  // Damnak Changaeur
   { id: 110201, name: "ឃុំដំណាក់ចង្អើរ", districtId: 1102 },
   { id: 110202, name: "ឃុំជើងឯក", districtId: 1102 },
-  // Krong Kampot (id: 1201)
+  // Kampot (id: 1200 series)
   { id: 120101, name: "សង្កាត់កំពត", districtId: 1201 },
   { id: 120102, name: "សង្កាត់កំពង់", districtId: 1201 },
-  // Srok Dâng Tong (id: 1202)
-  { id: 120201, name: "ឃុំដងទង់", districtId: 1202 },
-  { id: 120202, name: "ឃុំព្រែក", districtId: 1202 },
-  // Srok Tuek Chhou (id: 1203)
-  { id: 120301, name: "ឃុំទឹកឈូ", districtId: 1203 },
-  { id: 120302, name: "ឃុំកំពង់ត្រឡាច", districtId: 1203 },
-  // Srok Chhuk (id: 1204)
-  { id: 120401, name: "ឃុំឈូក", districtId: 1204 },
-  { id: 120402, name: "ឃុំជ្រោយថ្ម", districtId: 1204 },
-  // Srok Chum Kiri (id: 1205)
-  { id: 120501, name: "ឃុំជុំគិរី", districtId: 1205 },
-  { id: 120502, name: "ឃុំព្រែក", districtId: 1205 },
-  // Srok Banteay Meas (id: 1206)
-  { id: 120601, name: "ឃុំបន្ទាយមាស", districtId: 1206 },
-  { id: 120602, name: "ឃុំព្រែក", districtId: 1206 },
-  // Srok Chhuk (id: 1207)
-  { id: 120701, name: "ឃុំឈូក", districtId: 1207 },
-  { id: 120702, name: "ឃុំកំពង់ត្រឡាច", districtId: 1207 },
-  // Krong Preah Vihear (id: 1301)
+  // Preah Vihear (id: 1300 series)
   { id: 130101, name: "សង្កាត់ព្រះវិហារ", districtId: 1301 },
   { id: 130102, name: "សង្កាត់កោះ", districtId: 1301 },
-  // Srok Chey Sen (id: 1302)
-  { id: 130201, name: "ឃុំជ័យសែន", districtId: 1302 },
-  { id: 130202, name: "ឃុំស្រុក", districtId: 1302 },
-  // Srok Chheb (id: 1303)
-  { id: 130301, name: "ឃុំឆែប", districtId: 1303 },
-  { id: 130302, name: "ឃុំកន្ទឺ១", districtId: 1303 },
-  // Srok Cham Ksan (id: 1304)
-  { id: 130401, name: "ឃុំជាំក្សាន្ត", districtId: 1304 },
-  { id: 130402, name: "ឃុំស្រុក", districtId: 1304 },
-  // Srok Koulen (id: 1305)
-  { id: 130501, name: "ឃុំគូលែន", districtId: 1305 },
-  { id: 130502, name: "ឃុំកន្ទឺ២", districtId: 1305 },
-  // Srok Rovieng (id: 1306)
-  { id: 130601, name: "ឃុំរវៀង", districtId: 1306 },
-  { id: 130602, name: "ឃុំស្រុក", districtId: 1306 },
-  // Srok Sangkum Thmey (id: 1307)
-  { id: 130701, name: "ឃុំសង្គមថ្មី", districtId: 1307 },
-  { id: 130702, name: "ឃុំស្រុក", districtId: 1307 },
-  // Krong Pursat (id: 1401)
+  // Pursat (id: 1400 series)
   { id: 140101, name: "សង្កាត់ពោធិ៍សាត់", districtId: 1401 },
   { id: 140102, name: "សង្កាត់កោះ", districtId: 1401 },
-  // Srok Bakan (id: 1402)
-  { id: 140201, name: "ឃុំបាកាន", districtId: 1402 },
-  { id: 140202, name: "ឃុំដីក្រហម", districtId: 1402 },
-  // Srok Kandieng (id: 1403)
-  { id: 140301, name: "ឃុំកណ្តៀង", districtId: 1403 },
-  { id: 140302, name: "ឃុំព្រែក", districtId: 1403 },
-  // Srok Krakor (id: 1404)
-  { id: 140401, name: "ឃុំក្រគរ", districtId: 1404 },
-  { id: 140402, name: "ឃុំព្រែក", districtId: 1404 },
-  // Srok Veal Veaeng (id: 1405)
-  { id: 140501, name: "ឃុំវាលវែង", districtId: 1405 },
-  { id: 140502, name: "ឃុំព្រែក", districtId: 1405 },
-  // Srok Phnom Kravanh (id: 1406)
-  { id: 140601, name: "ឃុំភ្នំក្រវាញ", districtId: 1406 },
-  { id: 140602, name: "ឃុំព្រែក", districtId: 1406 },
-  // Srok Talo Sen Chey (id: 1407)
-  { id: 140701, name: "ឃុំតាលោសែនជ័យ", districtId: 1407 },
-  { id: 140702, name: "ឃុំព្រែក", districtId: 1407 },
-  // Krong Prey Veng (id: 1501)
+  // Prey Veng (id: 1500 series)
   { id: 150101, name: "សង្កាត់ព្រៃវែង", districtId: 1501 },
   { id: 150102, name: "សង្កាត់ព្រែក", districtId: 1501 },
-  // Srok Po Rieng (id: 1502)
-  { id: 150201, name: "ឃុំពោធិ៍រៀង", districtId: 1502 },
-  { id: 150202, name: "ឃុំព្រែក", districtId: 1502 },
-  // Srok Kamchay Mear (id: 1503)
-  { id: 150301, name: "ឃុំកំចាយមារ", districtId: 1503 },
-  { id: 150302, name: "ឃុំកំពង់", districtId: 1503 },
-  // Srok Peam Ro (id: 1507)
-  { id: 150701, name: "ឃុំពាមរ", districtId: 1507 },
-  { id: 150702, name: "ឃុំព្រែក", districtId: 1507 },
-  // Srok Peam Chor (id: 1508)
-  { id: 150801, name: "ឃុំពាមជរ", districtId: 1508 },
-  { id: 150802, name: "ឃុំព្រែក", districtId: 1508 },
-  // Srok Preah Sdach (id: 1509)
-  { id: 150901, name: "ឃុំព្រះស្តេច", districtId: 1509 },
-  { id: 150902, name: "ឃុំព្រែក", districtId: 1509 },
-  // Srok Svay Antor (id: 1510)
-  { id: 151001, name: "ឃុំស្វាយអន្ទរ", districtId: 1510 },
-  { id: 151002, name: "ឃុំព្រែក", districtId: 1510 },
-  // Srok Koh Andaet (id: 1511)
-  { id: 151101, name: "ឃុំកោះអណ្ដែត", districtId: 1511 },
-  { id: 151102, name: "ឃុំព្រែក", districtId: 1511 },
-  // Krong Banlung (id: 1601)
+  // Ratanakiri (id: 1600 series)
   { id: 160101, name: "សង្កាត់បានលុង", districtId: 1601 },
   { id: 160102, name: "សង្កាត់បាងកក", districtId: 1601 },
-  // Srok Andong Meas (id: 1602)
-  { id: 160201, name: "ឃុំអណ្ដូងមាស", districtId: 1602 },
-  { id: 160202, name: "ឃុំគគរ", districtId: 1602 },
-  // Srok Kon Mom (id: 1603)
-  { id: 160301, name: "ឃុំកូនមុំ", districtId: 1603 },
-  { id: 160302, name: "ឃុំព្រែក", districtId: 1603 },
-  // Srok Ou Chum (id: 1604)
-  { id: 160401, name: "ឃុំអូរជុំ", districtId: 1604 },
-  { id: 160402, name: "ឃុំគគរ", districtId: 1604 },
-  // Srok Ou Ya Dav (id: 1605)
-  { id: 160501, name: "ឃុំអូរយ៉ាដាវ", districtId: 1605 },
-  { id: 160502, name: "ឃុំព្រែក", districtId: 1605 },
-  // Srok Lumphat (id: 1606)
-  { id: 160601, name: "ឃុំលំផាត់", districtId: 1606 },
-  { id: 160602, name: "ឃុំគគរ", districtId: 1606 },
-  // Srok Veun Sai (id: 1607)
-  { id: 160701, name: "ឃុំវើនសៃ", districtId: 1607 },
-  { id: 160702, name: "ឃុំព្រែក", districtId: 1607 },
-  // Srok Paksi (id: 1608)
-  { id: 160801, name: "ឃុំបក្សី", districtId: 1608 },
-  { id: 160802, name: "ឃុំកោះ", districtId: 1608 },
-  // Srok Ta Veaeng (id: 1609)
-  { id: 160901, name: "ឃុំតាវែង", districtId: 1609 },
-  { id: 160902, name: "ឃុំព្រែក", districtId: 1609 },
-  // Krong Stung Treng (id: 1701)
+  // Stung Treng (id: 1700 series)
   { id: 170101, name: "សង្កាត់ស្ទឹងត្រែង", districtId: 1701 },
   { id: 170102, name: "សង្កាត់ព្រែក", districtId: 1701 },
-  // Srok Stung Treng (id: 1702)
-  { id: 170201, name: "ឃុំស្ទឹងត្រែង", districtId: 1702 },
-  { id: 170202, name: "ឃុំព្រែក", districtId: 1702 },
-  // Srok Sesan (id: 1703)
-  { id: 170301, name: "ឃុំសេសាន", districtId: 1703 },
-  { id: 170302, name: "ឃុំព្រែក", districtId: 1703 },
-  // Srok Siem Bok (id: 1704)
-  { id: 170401, name: "ឃុំសៀមបូក", districtId: 1704 },
-  { id: 170402, name: "ឃុំព្រែក", districtId: 1704 },
-  // Srok Banteay Srei (id: 1705)
-  { id: 170501, name: "ឃុំបន្ទាយស្រី", districtId: 1705 },
-  { id: 170502, name: "ឃុំព្រែក", districtId: 1705 },
-  // Srok Thalaborivatt (id: 1706)
-  { id: 170601, name: "ឃុំថាឡាបរិវ៉ាត់", districtId: 1706 },
-  { id: 170602, name: "ឃុំព្រែក", districtId: 1706 },
-  // Krong Svay Rieng (id: 1801)
+  // Svay Rieng (id: 1800 series)
   { id: 180101, name: "សង្កាត់ស្វាយរៀង", districtId: 1801 },
   { id: 180102, name: "សង្កាត់ព្រែក", districtId: 1801 },
-  // Srok Chantrea (id: 1802)
-  { id: 180201, name: "ឃុំចន្ទ្រា", districtId: 1802 },
-  { id: 180202, name: "ឃុំព្រែក", districtId: 1802 },
-  // Srok Svay Chrum (id: 1803)
-  { id: 180301, name: "ឃុំស្វាយជ្រុំ", districtId: 1803 },
-  { id: 180302, name: "ឃុំព្រែក", districtId: 1803 },
-  // Srok Svay Rieng (id: 1804)
-  { id: 180401, name: "ឃុំស្វាយរៀង", districtId: 1804 },
-  { id: 180402, name: "ឃុំព្រែក", districtId: 1804 },
-  // Srok Romduol (id: 1805)
-  { id: 180501, name: "ឃុំរំដួល", districtId: 1805 },
-  { id: 180502, name: "ឃុំព្រែក", districtId: 1805 },
-  // Srok Kampong Roateh (id: 1806)
-  { id: 180601, name: "ឃុំកំពង់រោទិ៍", districtId: 1806 },
-  { id: 180602, name: "ឃុំព្រែក", districtId: 1806 },
-  // Srok Romeas Haek (id: 1807)
-  { id: 180701, name: "ឃុំរមាសហែក", districtId: 1807 },
-  { id: 180702, name: "ឃុំព្រែក", districtId: 1807 },
-  // Krong Daun Kaev (id: 1901)
+  // Takeo (id: 1900 series)
   { id: 190101, name: "សង្កាត់ដូនកែវ", districtId: 1901 },
   { id: 190102, name: "សង្កាត់ព្រែក", districtId: 1901 },
-  // Srok Bati (id: 1902)
-  { id: 190201, name: "ឃុំបាទី", districtId: 1902 },
-  { id: 190202, name: "ឃុំព្រែក", districtId: 1902 },
-  // Srok Preah Kb (id: 1903)
-  { id: 190301, name: "ឃុំព្រៃកប្បាស", districtId: 1903 },
-  { id: 190302, name: "ឃុំព្រែក", districtId: 1903 },
-  // Srok Samraong (id: 1904)
-  { id: 190401, name: "ឃុំសំរោង", districtId: 1904 },
-  { id: 190402, name: "ឃុំព្រែក", districtId: 1904 },
-  // Srok Angkor Borei (id: 1905)
-  { id: 190501, name: "ឃុំអង្គរបុរី", districtId: 1905 },
-  { id: 190502, name: "ឃុំព្រែក", districtId: 1905 },
-  // Srok Kiri Vong (id: 1906)
-  { id: 190601, name: "ឃុំគីរីវង់", districtId: 1906 },
-  { id: 190602, name: "ឃុំព្រែក", districtId: 1906 },
-  // Srok Tram Kak (id: 1907)
-  { id: 190701, name: "ឃុំត្រាំកក់", districtId: 1907 },
-  { id: 190702, name: "ឃុំព្រែក", districtId: 1907 },
-  // Srok Borey Cholasa (id: 1908)
-  { id: 190801, name: "ឃុំបូរីជលសារ", districtId: 1908 },
-  { id: 190802, name: "ឃុំព្រែក", districtId: 1908 },
-  // Srok Koh Andaet (id: 1909)
-  { id: 190901, name: "ឃុំកោះអណ្ដែត", districtId: 1909 },
-  { id: 190902, name: "ឃុំព្រែក", districtId: 1909 },
-  // Krong Samraong (id: 2001)
+  // Oddar Meanchey (id: 2000 series)
   { id: 200101, name: "សង្កាត់សំរោង", districtId: 2001 },
   { id: 200102, name: "សង្កាត់ព្រែក", districtId: 2001 },
-  // Srok Trapeang Prasat (id: 2002)
-  { id: 200201, name: "ឃុំត្រពាំងប្រាសាទ", districtId: 2002 },
-  { id: 200202, name: "ឃុំព្រែក", districtId: 2002 },
-  // Srok Anlong Veaeng (id: 2003)
-  { id: 200301, name: "ឃុំអន្លង់វែង", districtId: 2003 },
-  { id: 200302, name: "ឃុំព្រែក", districtId: 2003 },
-  // Srok Chong Kal (id: 2004)
-  { id: 200401, name: "ឃុំចុងកាល់", districtId: 2004 },
-  { id: 200402, name: "ឃុំព្រែក", districtId: 2004 },
-  // Srok Banteay Ampil (id: 2005)
-  { id: 200501, name: "ឃុំបន្ទាយអំពិល", districtId: 2005 },
-  { id: 200502, name: "ឃុំព្រែក", districtId: 2005 },
-  // Krong Pailin (id: 2101)
+  // Pailin (id: 2100 series)
   { id: 210101, name: "សង្កាត់ប៉ៃលិន", districtId: 2101 },
   { id: 210102, name: "សង្កាត់ព្រែក", districtId: 2101 },
-  // Srok Sala Krau (id: 2102)
-  { id: 210201, name: "ឃុំសាលាក្រៅ", districtId: 2102 },
-  { id: 210202, name: "ឃុំព្រែក", districtId: 2102 },
-  // Krong Serei Saophoan (id: 2201)
+  // Banteay Meanchey (id: 2200 series)
   { id: 220101, name: "សង្កាត់សិរីសោភ័ណ", districtId: 2201 },
   { id: 220102, name: "សង្កាត់ព្រែក", districtId: 2201 },
-  // Srok Malai (id: 2202)
-  { id: 220201, name: "ឃុំម៉ាឡៃ", districtId: 2202 },
-  { id: 220202, name: "ឃុំព្រែក", districtId: 2202 },
-  // Srok Mongkol Borey (id: 2203)
-  { id: 220301, name: "ឃុំមង្គលបូរី", districtId: 2203 },
-  { id: 220302, name: "ឃុំព្រែក", districtId: 2203 },
-  // Srok Ou Chrov (id: 2204)
-  { id: 220401, name: "ឃុំអូរជិញ្ជៀន", districtId: 2204 },
-  { id: 220402, name: "ឃុំព្រែក", districtId: 2204 },
-  // Srok Svay Chek (id: 2205)
-  { id: 220501, name: "ឃុំស្វាយចេក", districtId: 2205 },
-  { id: 220502, name: "ឃុំព្រែក", districtId: 2205 },
-  // Srok Phnom Srok (id: 2206)
-  { id: 220601, name: "ឃុំភ្នំស្រុក", districtId: 2206 },
-  { id: 220602, name: "ឃុំព្រែក", districtId: 2206 },
-  // Srok Thma Puok (id: 2207)
-  { id: 220701, name: "ឃុំថ្មពួក", districtId: 2207 },
-  { id: 220702, name: "ឃុំព្រែក", districtId: 2207 },
-  // Srok Banteay Ampil (id: 2208)
-  { id: 220801, name: "ឃុំបន្ទាយអំពិល", districtId: 2208 },
-  { id: 220802, name: "ឃុំព្រែក", districtId: 2208 },
-  // Srok Preah Netr Preah (id: 2209)
-  { id: 220901, name: "ឃុំព្រះនេត្រព្រះ", districtId: 2209 },
-  { id: 220902, name: "ឃុំព្រែក", districtId: 2209 },
-  // Srok Kaev Seima (id: 2301)
-  { id: 230101, name: "ឃុំកែវសីមា", districtId: 2301 },
-  { id: 230102, name: "ឃុំព្រែក", districtId: 2301 },
-  // Srok Koh Nheaek (id: 2302)
-  { id: 230201, name: "ឃុំកោះញែក", districtId: 2302 },
-  { id: 230202, name: "ឃុំព្រែក", districtId: 2302 },
-  // Krong Saen Monourom (id: 2303)
+  // Mondulkiri (id: 2300 series)
   { id: 230301, name: "សង្កាត់សែនមនោរម្យ", districtId: 2303 },
   { id: 230302, name: "សង្កាត់ព្រែក", districtId: 2303 },
-  // Srok Pechreada (id: 2304)
-  { id: 230401, name: "ឃុំពេជ្រាដា", districtId: 2304 },
-  { id: 230402, name: "ឃុំព្រែក", districtId: 2304 },
-  // Srok Ou Reang (id: 2305)
-  { id: 230501, name: "ឃុំអូររាំង", districtId: 2305 },
-  { id: 230502, name: "ឃុំព្រែក", districtId: 2305 },
-  // Srok Kratié (id: 2401)
-  { id: 240101, name: "ឃុំក្រចេះ", districtId: 2401 },
-  { id: 240102, name: "ឃុំព្រែក", districtId: 2401 },
-  // Srok Prek Prasab (id: 2402)
-  { id: 240201, name: "ឃុំព្រែកប្រសព្វ", districtId: 2402 },
-  { id: 240202, name: "ឃុំព្រែក", districtId: 2402 },
-  // Srok Sambour (id: 2403)
-  { id: 240301, name: "ឃុំសំបូរ", districtId: 2403 },
-  { id: 240302, name: "ឃុំព្រែក", districtId: 2403 },
-  // Krong Kratié (id: 2404)
+  // Kratie (id: 2400 series)
   { id: 240401, name: "សង្កាត់ក្រចេះ", districtId: 2404 },
   { id: 240402, name: "សង្កាត់ព្រែក", districtId: 2404 },
-  // Srok Chhlong (id: 2405)
-  { id: 240501, name: "ឃុំឆ្លូង", districtId: 2405 },
-  { id: 240502, name: "ឃុំព្រែក", districtId: 2405 },
-  // Srok Sambour (id: 2406)
-  { id: 240601, name: "ឃុំសំបូរ", districtId: 2406 },
-  { id: 240602, name: "ឃុំព្រែក", districtId: 2406 },
-  // Srok Prek Prasab (id: 2407)
-  { id: 240701, name: "ឃុំព្រែកប្រសព្វ", districtId: 2407 },
-  { id: 240702, name: "ឃុំព្រែក", districtId: 2407 },
-  // Srok Tboung Khmum (id: 2501)
+  // Tboung Khmum (id: 2500 series)
   { id: 250101, name: "ឃុំត្បូងឃ្មុំ", districtId: 2501 },
   { id: 250102, name: "ឃុំព្រែក", districtId: 2501 },
-  // Srok Ou Reang Ov (id: 2502)
-  { id: 250201, name: "ឃុំអូររាំងឪ", districtId: 2502 },
-  { id: 250202, name: "ឃុំព្រែក", districtId: 2502 },
-  // Srok Krouch Chhmar (id: 2503)
-  { id: 250301, name: "ឃុំក្រូចឆ្មារ", districtId: 2503 },
-  { id: 250302, name: "ឃុំព្រែក", districtId: 2503 },
-  // Srok Dambae (id: 2504)
-  { id: 250401, name: "ឃុំដំបែ", districtId: 2504 },
-  { id: 250402, name: "ឃុំព្រែក", districtId: 2504 },
-  // Srok Ponhea Kraek (id: 2505)
-  { id: 250501, name: "ឃុំពញាក្រែក", districtId: 2505 },
-  { id: 250502, name: "ឃុំព្រែក", districtId: 2505 },
-  // Srok Memot (id: 2506)
-  { id: 250601, name: "ឃុំមេមត់", districtId: 2506 },
-  { id: 250602, name: "ឃុំព្រែក", districtId: 2506 },
-  // Srok Kong Kong (id: 2507)
-  { id: 250701, name: "ឃុំគងគង់", districtId: 2507 },
-  { id: 250702, name: "ឃុំព្រែក", districtId: 2507 },
-  // Srok Ponhea Kraek (id: 2508)
-  { id: 250801, name: "ឃុំពញាក្រែក", districtId: 2508 },
-  { id: 250802, name: "ឃុំព្រែក", districtId: 2508 },
 ];
