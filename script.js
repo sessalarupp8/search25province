@@ -94,7 +94,7 @@ $(document).ready(function () {
     try {
       document.execCommand("copy");
       const originalText = $button.text();
-      $button.text("✓ ចម្លងរួចរាល់");
+      $button.text("ចម្លងរួចរាល់");
       setTimeout(function () {
         $button.text(originalText);
       }, 1500);
