@@ -275,58 +275,44 @@ label {
 
 @media (max-width: 900px) {
     .big-box {
-        padding: 20px;
-        margin: 10px;
+        /* Reduced horizontal padding */
+        padding: 15px; 
+        margin: 5px; /* Reduced overall margin */
     }
 
     h2 {
         font-size: 24px;
     }
 
-    /* Stack sections vertically */
+    /* Stack sections vertically and reduce gap */
     .title-and-search-wrapper,
     .small-box-container,
     .final-output-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px; /* Reduced gap between components */
         align-items: stretch;
     }
+    
+    /* Ensure no horizontal margin/padding bleed on internal components */
+    .small-box {
+        min-width: 100%;
+        padding: 15px; /* Reduced inner padding */
+    }
 
-    .small-box,
     .address-output-box,
     .code-output-box {
-        flex: 1 1 100%;
-        min-width: 100%;
-        min-height: unset;
-        padding: 15px 20px;
-    }
-    
-    /* Address Output Box Mobile Layout Fix */
-    .address-output-box {
-        flex-direction: row; /* Keep content and button on one row */
-        flex-wrap: nowrap;
-        justify-content: space-between; 
-        align-items: center; /* Center button vertically */
-        height: auto;
-        min-height: 80px; 
+        padding: 15px; /* Reduced inner padding for output boxes */
     }
 
-    .address-text-content {
-        flex-basis: auto; 
-        flex-grow: 1;
-        padding-right: 15px;
-        /* Ensure text itself doesn't cause overflow */
-        overflow: hidden; 
-        display: block; 
+    /* Fix to ensure the title and search bar don't push outside */
+    .title-and-search-wrapper {
+        padding: 0;
     }
-    
-    .address-output-box .copy-button {
-        margin-left: auto; 
-        align-self: center; /* Vertically align */
-    }
-    
-    .code-output-box {
-        justify-content: space-between;
+
+    /* Final button size adjustment for smaller screens if needed */
+    .green-button, .copy-button {
+        padding: 8px 12px;
+        font-size: 14px;
     }
 }
 
