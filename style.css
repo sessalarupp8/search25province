@@ -47,6 +47,7 @@ h2 {
   display: flex;
   align-items: center;
   gap: 15px;
+  /* Desktop Padding */
   padding: 12px 16px 12px 12px;
   background-color: #f7f7f7;
   border-radius: 18px;
@@ -55,10 +56,10 @@ h2 {
 
 #codeInput {
   flex-grow: 1;
-  width: 250px;
-  padding: 12px 20px;
+  width: 150px;
+  padding: 10px 15px;
   border: 1px solid #e0e0e0;
-  border-radius: 14px;
+  border-radius: 12px;
   font-size: 16px;
   background-color: white;
   color: #333;
@@ -82,27 +83,18 @@ h2 {
   flex-wrap: wrap;
   gap: 25px;
   justify-content: center;
-  /* FINAL FIX: Ensure the entire container has bottom margin */
   margin-bottom: 40px;
 }
 
 .small-box {
   background: #f7f7f7;
-  padding: 25px; /* Restored original padding */
+  padding: 25px;
   border-radius: 18px;
   flex: 1;
   min-width: 300px;
   box-sizing: border-box;
   border: 1px solid #f0f0f0;
-  /* FINAL FIX: Add margin to the bottom of each small box for stacking space */
-  margin-bottom: 25px; 
 }
-
-/* Clear margin for the last row of small boxes in the container */
-.small-box-container:last-child .small-box {
-  margin-bottom: 0;
-}
-
 
 label {
   display: block;
@@ -223,11 +215,22 @@ label {
   top: 0;
 }
 
+.copy-button:active {
+  top: 0;
+  box-shadow: none;
+}
+
+/* Blue button (Address Copy) is now Green */
 .blue-button {
   background-color: #70b34f; /* Green color */
   color: white;
 }
 
+.blue-button:hover:not(:disabled) {
+  background-color: #5d9241;
+}
+
+/* Green buttons (Search and Code Copy) */
 .green-button {
   background-color: #70b34f;
   color: white;
@@ -240,6 +243,10 @@ label {
   top: 0;
   cursor: pointer;
   border: none;
+}
+
+.green-button:hover:not(:disabled) {
+  background-color: #5d9241;
 }
 
 .copy-button:disabled,
@@ -257,56 +264,48 @@ label {
 
 @media (max-width: 900px) {
   .big-box {
-    padding: 20px;
-    margin: 15px;
+    padding: 15px;
+    margin: 5px;
   }
 
   h2 {
-    font-size: 26px;
+    font-size: 24px;
   }
 
-  /* Stack sections vertically and increase spacing (gap) */
+  /* Stack sections vertically and use minimal padding */
   .title-and-search-wrapper,
+  .small-box-container,
   .final-output-container {
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     align-items: stretch;
-  }
-
-  /* Small box container spacing fix */
-  .small-box-container {
-      flex-direction: column;
-      gap: 15px; /* Increased gap between dropdown boxes */
-      align-items: stretch;
   }
 
   /* Search component sizing fix */
   .code-search-component {
     gap: 10px;
-    padding: 18px;
+    padding: 20px;
   }
 
   #codeInput {
-    padding: 14px 12px;
+    padding: 16px 24px;
     flex-grow: 1;
     min-width: 0;
   }
 
   .green-button {
-    padding: 10px 14px; /* Small button on mobile */
-    font-size: 14px;
+    padding: 10px 18px; /* Small button on mobile */
+    font-size: 16px;
   }
 
   .small-box {
     min-width: 100%;
-    padding: 18px;
-    /* Remove bottom margin inside the media query, as the container gap handles it */
-    margin-bottom: 0; 
+    padding: 15px;
   }
 
   .address-output-box,
   .code-output-box {
-    padding: 18px;
+    padding: 15px;
     flex: 1 1 100%;
     min-height: unset;
   }
@@ -317,7 +316,7 @@ label {
     justify-content: space-between;
     align-items: center;
     height: auto;
-    min-height: 0px;
+    min-height: 80px;
   }
 
   .address-text-content {
