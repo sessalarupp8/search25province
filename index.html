@@ -1,70 +1,84 @@
 <!DOCTYPE html>
 <html lang="km">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ជ្រើសរើស ខេត្ត ស្រុក/ខណ្ឌ និង ឃុំ/សង្កាត់</title>
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ជ្រើសរើស ខេត្ត ស្រុក/ខណ្ឌ ឃុំ/សង្កាត់ និង ភូមិ</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bayon&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="big-box">
-    
-    <div class="title-and-search-wrapper">
-        <h2>ជ្រើសរើស តំបន់</h2>
-        
-        <div class="code-search-component"> 
-            <input type="text" id="codeInput" placeholder="សូមបញ្ចូលលេខកូដ" pattern="[0-9-]*" /> 
-            <button id="lookupButton" class="green-button">ស្វែងរក</button>
-        </div>
-    </div>
-    
-    <div class="small-box-container">
-      <div class="small-box">
-        <label for="provinceSelect">ខេត្ត / រាជធានី</label>
-        <select id="provinceSelect">
-          <option value="" disabled selected>សូមជ្រើសរើសខេត្ត</option>
-        </select>
-      </div>
 
-      <div class="small-box">
-        <label for="districtSelect">ស្រុក / ខណ្ឌ</label>
-        <select id="districtSelect">
-          <option value="" disabled selected>សូមជ្រើសរើសស្រុក / ខណ្ឌ</option>
-        </select>
-      </div>
-
-      <div class="small-box">
-        <label for="communeSelect">ឃុំ / សង្កាត់</label>
-        <select id="communeSelect">
-          <option value="" disabled selected>សូមជ្រើសរើសឃុំ / សង្កាត់</option>
-        </select>
-      </div>
-    </div>
-    
-    <div class="final-output-container hidden">
+    <div class="big-box">
         
-        <div class="address-output-box">
-            <div class="address-text-content">
-                <span class="address-prefix">អាសយដ្ឋាន:</span> 
-                <span id="addressContent">សូមជ្រើសរើស ឃុំ ស្រុក/ខណ្ឌ និង រាជធានី/ខេត្ត</span>
+        <div class="title-and-search-wrapper">
+            <h2>ជ្រើសរើស តំបន់</h2>
+            
+            <div class="code-search-component">
+                <input type="text" id="codeInput" placeholder="សូមបញ្ចូលលេខកូដ (ឧ. 10101)" pattern="[0-9-]*" />
+                <button id="lookupButton" class="green-button">ស្វែងរក</button>
             </div>
-            <button id="copyAddressButton" class="copy-button blue-button">ចម្លង</button>
         </div>
         
-        <div class="code-output-box">
-            <span class="code-prefix">លេខកូដ:</span> 
-            <span id="codeContent">N/A</span>
-            <button id="copyCodeButton" class="copy-button green-button">ចម្លង</button> 
+        <div class="small-box-container">
+            <div class="small-box">
+                <label for="provinceSelect">ខេត្ត / រាជធានី</label>
+                <select id="provinceSelect">
+                    <option value="" disabled selected>សូមជ្រើសរើសខេត្ត</option>
+                </select>
+            </div>
+
+            <div class="small-box">
+                <label for="districtSelect">ស្រុក / ខណ្ឌ</label>
+                <select id="districtSelect">
+                    <option value="" disabled selected>សូមជ្រើសរើសស្រុក / ខណ្ឌ</option>
+                </select>
+            </div>
+
+            <div class="small-box">
+                <label for="communeSelect">ឃុំ / សង្កាត់</label>
+                <select id="communeSelect">
+                    <option value="" disabled selected>សូមជ្រើសរើសឃុំ / សង្កាត់</option>
+                </select>
+            </div>
+            
+            <div class="small-box">
+                <label for="villageSelect">ភូមិ / ក្រុម</label>
+                <select id="villageSelect">
+                    <option value="" disabled selected>សូមជ្រើសរើសភូមិ / ក្រុម</option>
+                </select>
+            </div>
+
+        </div>
+        
+        <div class="final-output-container hidden">
+            
+            <div class="address-output-box">
+                <div class="address-text-content">
+                    <span class="address-prefix">អាសយដ្ឋាន:</span>
+                    <span id="addressContent">សូមជ្រើសរើស ភូមិ ឃុំ ស្រុក/ខណ្ឌ និង រាជធានី/ខេត្ត</span>
+                </div>
+                <button id="copyAddressButton" class="copy-button blue-button">ចម្លង</button>
+            </div>
+            
+            <div class="code-output-box">
+                <span class="code-prefix">លេខកូដ:</span>
+                <span id="codeContent">N/A</span>
+                <button id="copyCodeButton" class="copy-button green-button">ចម្លង</button>
+            </div>
         </div>
     </div>
-    
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script src="datas.json"></script>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>

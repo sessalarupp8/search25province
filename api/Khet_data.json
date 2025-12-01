@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "class": "ខេត្ត",
+    "khmer_name": "បន្ទាយមានជ័យ",
+    "english_name": "Banteay Meanchey"
+  },
+  {
+    "id": 2,
+    "class": "ខេត្ត",
+    "khmer_name": "បាត់ដំបង",
+    "english_name": "Battambang"
+  },
+  {
+    "id": 3,
+    "class": "ខេត្ត",
+    "khmer_name": "កំពង់ចាម",
+    "english_name": "Kampong Cham"
+  },
+  {
+    "id": 4,
+    "class": "ខេត្ត",
+    "khmer_name": "កំពង់ឆ្នាំង",
+    "english_name": "Kampong Chhnang"
+  },
+  {
+    "id": 5,
+    "class": "ខេត្ត",
+    "khmer_name": "កំពង់ស្ពឺ",
+    "english_name": "Kampong Speu"
+  },
+  {
+    "id": 6,
+    "class": "ខេត្ត",
+    "khmer_name": "កំពង់ធំ",
+    "english_name": "Kampong Thom"
+  },
+  {
+    "id": 7,
+    "class": "ខេត្ត",
+    "khmer_name": "កំពត",
+    "english_name": "Kampot"
+  },
+  {
+    "id": 8,
+    "class": "ខេត្ត",
+    "khmer_name": "កណ្តាល",
+    "english_name": "Kandal"
+  },
+  {
+    "id": 9,
+    "class": "ខេត្ត",
+    "khmer_name": "កោះកុង",
+    "english_name": "Koh Kong"
+  },
+  {
+    "id": 10,
+    "class": "ខេត្ត",
+    "khmer_name": "ក្រចេះ",
+    "english_name": "Kratie"
+  },
+  {
+    "id": 11,
+    "class": "ខេត្ត",
+    "khmer_name": "មណ្ឌលគីរី",
+    "english_name": "Mondul Kiri"
+  },
+  {
+    "id": 12,
+    "class": "រាជធានី",
+    "khmer_name": "ភ្នំពេញ",
+    "english_name": "Phnom Penh"
+  },
+  {
+    "id": 13,
+    "class": "ខេត្ត",
+    "khmer_name": "ព្រះវិហារ",
+    "english_name": "Preah Vihear"
+  },
+  {
+    "id": 14,
+    "class": "ខេត្ត",
+    "khmer_name": "ព្រៃវែង",
+    "english_name": "Prey Veng"
+  },
+  {
+    "id": 15,
+    "class": "ខេត្ត",
+    "khmer_name": "ពោធិ៍សាត់",
+    "english_name": "Pursat"
+  },
+  {
+    "id": 16,
+    "class": "ខេត្ត",
+    "khmer_name": "រតនគីរី",
+    "english_name": "Ratanak Kiri"
+  },
+  {
+    "id": 17,
+    "class": "ខេត្ត",
+    "khmer_name": "សៀមរាប",
+    "english_name": "Siem Reap"
+  },
+  {
+    "id": 18,
+    "class": "ខេត្ត",
+    "khmer_name": "ព្រះសីហនុ",
+    "english_name": "Sihanoukville"
+  },
+  {
+    "id": 19,
+    "class": "ខេត្ត",
+    "khmer_name": "ស្ទឹងត្រែង",
+    "english_name": "Stung Treng"
+  },
+  {
+    "id": 20,
+    "class": "ខេត្ត",
+    "khmer_name": "ស្វាយរៀង",
+    "english_name": "Svay Rieng"
+  },
+  {
+    "id": 21,
+    "class": "ខេត្ត",
+    "khmer_name": "តាកែវ",
+    "english_name": "Takeo"
+  },
+  {
+    "id": 22,
+    "class": "ខេត្ត",
+    "khmer_name": "ឧត្ដរមានជ័យ",
+    "english_name": "Otdar Meanchey"
+  },
+  {
+    "id": 23,
+    "class": "ខេត្ត",
+    "khmer_name": "កែប",
+    "english_name": "Kep"
+  },
+  {
+    "id": 24,
+    "class": "ខេត្ត",
+    "khmer_name": "ប៉ៃលិន",
+    "english_name": "Pailin"
+  },
+  {
+    "id": 25,
+    "class": "ខេត្ត",
+    "khmer_name": "ត្បូងឃ្មុំ",
+    "english_name": "Tboung Khmum"
+  }
+]
