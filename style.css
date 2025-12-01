@@ -3,41 +3,40 @@
 /* ------------------------------------------- */
 
 body {
-    font-family: "Khmer OS Battambang", "Khmer OS Siemreap", Arial, sans-serif; /* Primary Khmer Font */
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    background: #50b4c8; /* Main body background color */
-    overflow-x: hidden; /* Prevents horizontal scroll on mobile */
+  font-family: "Khmer OS Battambang", "Khmer OS Siemreap", Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #50b4c8;
+  overflow-x: hidden; /* Prevents horizontal scroll */
 }
 
 .big-box {
-    background: white;
-    padding: 50px; /* Internal space within the main card */
-    border-radius: 20px; /* Rounded corners */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    width: 95%; /* Responsive width */
-    max-width: 1000px; /* Maximum size for desktop */
-    box-sizing: border-box;
-    text-align: center;
-    margin: 20px 0; /* Vertical margin for spacing */
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  width: 95%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 20px 0;
 }
 
 h2 {
-    margin: 0;
-    color: #333;
-    font-size: 36px; /* Heading font size */
-    font-weight: bold;
+  margin: 0;
+  color: #333;
+  font-size: 36px;
+  font-weight: bold;
 }
 
 .title-and-search-wrapper {
-    display: flex;
-    justify-content: space-between; /* Pushes title and search bar to edges */
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap; /* NEW: Allows wrapping on smaller screens */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 /* ------------------------------------------- */
@@ -45,33 +44,34 @@ h2 {
 /* ------------------------------------------- */
 
 .code-search-component {
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Space between input field and button */
-    padding: 12px 16px 12px 12px; /* Padding inside the grey container */
-    background-color: #f7f7f7; /* Light grey container background */
-    border-radius: 18px;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* Desktop Padding */
+  padding: 12px 16px 12px 12px;
+  background-color: #f7f7f7;
+  border-radius: 18px;
+  box-sizing: border-box;
 }
 
 #codeInput {
-    flex-grow: 1; /* Input takes priority horizontal space */
-    width: 270px; /* Base width */
-    padding: 15px 20px; /* Internal padding for the oval shape */
-    border: 1px solid #e0e0e0;
-    border-radius: 30px; /* High rounding for full oval shape */
-    font-size: 16px;
-    background-color: white;
-    color: #333;
+  flex-grow: 1;
+  width: 150px;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: white;
+  color: #333;
 }
 
 #codeInput::placeholder {
-    color: #a0a0a0; /* Placeholder color */
+  color: #a0a0a0;
 }
 
 #codeInput:focus {
-    border-color: #26a8d8; /* Highlight color on focus */
-    outline: none;
+  border-color: #26a8d8;
+  outline: none;
 }
 
 /* ------------------------------------------- */
@@ -79,75 +79,60 @@ h2 {
 /* ------------------------------------------- */
 
 .small-box-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px; /* Horizontal gap between small boxes */
-    justify-content: center;
-    margin-bottom: 40px; /* Space before output section */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 .small-box {
-    background: #f7f7f7; /* Light grey box background */
-    padding: 25px;
-    border-radius: 18px;
-    flex: 1; /* Allows boxes to stretch equally */
-    min-width: 300px;
-    box-sizing: border-box;
-    border: 1px solid #f0f0f0;
-    margin-bottom: 25px; /* Vertical margin between rows of boxes */
-}
-
-/* 🎯 Adjust layout for four boxes on wider screens (two boxes per row) */
-@media (min-width: 1001px) {
-    .small-box {
-        /* Ensures two boxes fit well on a line (50% - half the gap) */
-        flex: 1 1 calc(50% - 13px); 
-        min-width: unset; 
-    }
-}
-
-
-.small-box-container:last-child .small-box {
-    margin-bottom: 0; /* Clears margin on the last row */
+  background: #f7f7f7;
+  padding: 25px;
+  border-radius: 18px;
+  flex: 1;
+  min-width: 300px;
+  box-sizing: border-box;
+  border: 1px solid #f0f0f0;
 }
 
 label {
-    display: block;
-    margin-bottom: 12px;
-    font-size: 18px;
-    color: #555;
-    font-weight: bold;
-    text-align: center;
+  display: block;
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #555;
+  font-weight: bold;
+  text-align: center;
 }
 
-/* Select2 styles (The white internal dropdown field) */
+/* Select2 styles */
 .select2-container {
-    width: 100% !important; /* Forces Select2 to use full width */
+  width: 100% !important;
 }
 
 .select2-container--default .select2-selection--single {
-    height: 50px;
-    padding: 0;
-    border-radius: 12px;
-    font-size: 16px;
-    border: 1px solid #e0e0e0;
-    background-color: white;
-    display: flex;
-    align-items: center; /* Vertically centers content */
+  height: 50px;
+  padding: 0;
+  border-radius: 12px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  display: flex;
+  align-items: center;
 }
 
 .select2-container--default
-    .select2-selection--single
-    .select2-selection__rendered {
-    color: #333;
-    text-align: left;
-    white-space: normal; /* Allows text to wrap */
-    overflow: visible;
-    text-overflow: clip;
-    padding: 10px 40px 10px 20px;
-    line-height: 25px;
-    margin: 0 !important;
-    flex-grow: 1;
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: #333;
+  text-align: left;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  padding: 10px 40px 10px 20px;
+  line-height: 25px;
+  margin: 0 !important;
+  flex-grow: 1;
 }
 
 /* ------------------------------------------- */
@@ -155,66 +140,61 @@ label {
 /* ------------------------------------------- */
 
 .final-output-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 25px;
-    text-align: left;
-    margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  text-align: left;
 }
 
 .address-output-box {
-    /* Address box (2/3 width, light blue background) */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 25px;
-    background-color: #e0f2fe; /* Light Blue */
-    border-radius: 15px;
-    border: 1px solid #a7d9f7;
-    flex: 2; /* Takes twice the space of the code box */
-    min-height: 80px;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+  background-color: #e0f2fe;
+  border-radius: 15px;
+  border: 1px solid #a7d9f7;
+  flex: 2; /* 2/3 of the space */
+  min-height: 80px;
+  box-sizing: border-box;
 }
 
 .address-text-content {
-    flex-grow: 1;
-    padding-right: 15px;
+  flex-grow: 1;
+  padding-right: 15px;
 }
 
 .address-prefix {
-    font-weight: bold;
-    margin-right: 10px;
-    font-size: 16px;
-    white-space: nowrap;
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 16px;
+  white-space: nowrap;
 }
 
 #addressContent {
-    font-weight: 500;
-    color: #333;
-    font-size: 16px;
-    line-height: 1.4;
-    display: inline; /* Allows text to flow directly after prefix */
+  font-weight: 500;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.4;
+  display: inline;
 }
 
 .address-output-box .copy-button {
-    margin-left: auto; /* Pushes button to the right */
-    flex-shrink: 0;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .code-output-box {
-    /* Code box (1/3 width) */
-    display: flex;
-    align-items: center;
-    padding: 15px 25px;
-    /* --- UPDATED TO LIGHT GREEN --- */
-    background-color: #d1fae5; /* Light Green */
-    border-radius: 15px;
-    border: 1px solid #a7d9b5;
-    /* ------------------------------ */
-    flex: 1;
-    min-height: 80px;
-    box-sizing: border-box;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: #e0f2fe;
+  border-radius: 15px;
+  border: 1px solid #a7d9f7;
+  flex: 1; /* 1/3 of the space */
+  min-height: 80px;
+  box-sizing: border-box;
+  justify-content: space-between;
 }
 
 /* ------------------------------------------- */
@@ -222,130 +202,135 @@ label {
 /* ------------------------------------------- */
 
 .copy-button {
-    border: none;
-    padding: 10px 18px;
-    border-radius: 20px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.3s;
-    white-space: nowrap;
-    flex-shrink: 0;
-    box-shadow: none; /* Removed shadow/stroke */
-    position: relative;
-    top: 0;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: none;
+  position: relative;
+  top: 0;
 }
 
 .copy-button:active {
-    top: 0;
-    box-shadow: none;
+  top: 0;
+  box-shadow: none;
 }
 
+/* Blue button (Address Copy) is now Green */
 .blue-button {
-    background-color: #70b34f; /* Green color for address copy */
-    color: white;
+  background-color: #70b34f; /* Green color */
+  color: white;
 }
 
 .blue-button:hover:not(:disabled) {
-    background-color: #5d9241;
+  background-color: #5d9241;
 }
 
+/* Green buttons (Search and Code Copy) */
 .green-button {
-    background-color: #70b34f; /* Green color for search and code copy */
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 20px;
-    font-weight: 600;
-    box-shadow: none;
-    position: relative;
-    top: 0;
-    cursor: pointer;
-    border: none;
+  background-color: #70b34f;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: none;
+  position: relative;
+  top: 0;
+  cursor: pointer;
+  border: none;
 }
 
 .green-button:hover:not(:disabled) {
-    background-color: #5d9241;
+  background-color: #5d9241;
 }
 
 .copy-button:disabled,
 .green-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    color: #777;
-    box-shadow: none;
-    top: 0;
+  background-color: #cccccc;
+  cursor: not-allowed;
+  color: #777;
+  box-shadow: none;
+  top: 0;
 }
 
 /* ------------------------------------------- */
-/* --- 6. RESPONSIVE DESIGN (Mobile) --- */
+/* --- 6. RESPONSIVE DESIGN (FINAL LAYOUT) --- */
 /* ------------------------------------------- */
 
 @media (max-width: 900px) {
-    .big-box {
-        padding: 15px;
-        margin: 5px;
-    }
+  .big-box {
+    padding: 15px;
+    margin: 5px;
+  }
 
-    h2 {
-        font-size: 24px;
-    }
+  h2 {
+    font-size: 24px;
+  }
 
-    /* Stack sections vertically and adjust spacing */
-    .title-and-search-wrapper,
-    .final-output-container {
-        flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
-    }
+  /* Stack sections vertically and use minimal padding */
+  .title-and-search-wrapper,
+  .small-box-container,
+  .final-output-container {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
 
-    .small-box-container {
-        flex-direction: column;
-        gap: 15px; 
-        align-items: stretch;
-        margin-bottom: 20px;
-    }
+  /* Search component sizing fix */
+  .code-search-component {
+    gap: 10px;
+    padding: 20px;
+  }
 
-    /* Search component sizing on mobile */
-    .code-search-component {
-        gap: 10px;
-        padding: 10px;
-    }
+  #codeInput {
+    padding: 16px 24px;
+    flex-grow: 1;
+    min-width: 0;
+  }
 
-    #codeInput {
-        flex-grow: 1;
-        max-width: unset; 
-        padding: 10px 15px; 
-        font-size: 14px;
-        border-radius: 18px;
-    }
+  .green-button {
+    padding: 10px 18px; /* Small button on mobile */
+    font-size: 16px;
+  }
 
-    .green-button {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
+  .small-box {
+    min-width: 100%;
+    padding: 15px;
+  }
 
-    /* Small boxes and output boxes */
-    .small-box {
-        min-width: 100%;
-        padding: 15px;
-        margin-bottom: 0;
-    }
+  .address-output-box,
+  .code-output-box {
+    padding: 15px;
+    flex: 1 1 100%;
+    min-height: unset;
+  }
 
-    .address-output-box,
-    .code-output-box {
-        padding: 15px;
-        flex: 1 1 100%;
-        min-height: unset;
-    }
+  .address-output-box {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    min-height: 80px;
+  }
 
-    .address-output-box {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        height: auto;
-        min-height: 80px;
-    }
+  .address-text-content {
+    flex-basis: auto;
+    flex-grow: 1;
+    padding-right: 15px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .address-output-box .copy-button {
+    margin-left: auto;
+    align-self: center;
+  }
 }
 
 /* ------------------------------------------- */
@@ -353,54 +338,5 @@ label {
 /* ------------------------------------------- */
 
 .hidden {
-    display: none !important;
-}
-
-/* ------------------------------------------- */
-/* --- 8. NOTIFICATION BOX STYLES (NEW/FIXED) --- */
-/* ------------------------------------------- */
-
-#notification-box {
-    /* Make it a fixed floating box (pop-up) */
-    position: fixed; 
-    top: 20px;
-    right: 20px;
-    
-    /* Appearance */
-    padding: 15px 25px;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    white-space: nowrap; /* Keeps the text on one line */
-    z-index: 1000; /* Ensures it is on top of everything */
-
-    /* Default Hidden State */
-    opacity: 0; 
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s, background-color 0.3s;
-}
-
-#notification-box.notification-visible {
-    /* State when visible (set by script) */
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Ensure the background colours for success/error match your buttons */
-.bg-green-100 {
-    background-color: #d1fae5; /* Light Green */
-    border: 1px solid #70b34f;
-}
-
-.text-green-700 {
-    color: #3d7920;
-}
-
-.bg-red-100 {
-    background-color: #fce7f3; /* Light Red/Pink for error */
-    border: 1px solid #b34f6b;
-}
-
-.text-red-700 {
-    color: #79203d;
+  display: none !important;
 }
