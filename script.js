@@ -1,387 +1,507 @@
 $(document).ready(function () {
-  const $province = $("#provinceSelect");
-  const $district = $("#districtSelect");
-  const $commune = $("#communeSelect");
-  const $codeInput = $("#codeInput");
-  const $lookupButton = $("#lookupButton");
-  const $addressContent = $("#addressContent");
-  const $codeContent = $("#codeContent");
-  const $copyAddressButton = $("#copyAddressButton");
-  const $copyCodeButton = $("#copyCodeButton");
-  
-  // Reference to the output container for show/hide functionality
-  const $outputContainer = $(".final-output-container");
+    // --- jQuery Element Selectors ---
+    const $province = $("#provinceSelect");
+    const $district = $("#districtSelect");
+    const $commune = $("#communeSelect");
+    const $village = $("#villageSelect");
+    const $codeInput = $("#codeInput");
+    const $lookupButton = $("#lookupButton");
+    const $addressContent = $("#addressContent");
+    const $codeContent = $("#codeContent");
+    const $copyAddressButton = $("#copyAddressButton");
+    const $copyCodeButton = $("#copyCodeButton");
+    const $outputContainer = $(".final-output-container");
 
-  const DEFAULT_ADDRESS_TEXT =
-    "សូមជ្រើសរើស ឃុំ/សង្កាត់ ស្រុក/ខណ្ឌ និង រាជធានី/ខេត្ត";
-  const DEFAULT_CODE_TEXT = "N/A";
+    // --- Constants & State ---
+    const DEFAULT_ADDRESS_TEXT = "សូមជ្រើសរើស ឃុំ/សង្កាត់ ស្រុក/ខណ្ឌ និង រាជធានី/ខេត្ត";
+    const DEFAULT_CODE_TEXT = "N/A";
 
-  let provinces = [];
-  let districts = [];
-  let communes = [];
-  let addressMap = {};
-  let reverseAddressMap = {}; 
-
-  // --- HELPER FUNCTION: Extracts the first segment of the code (e.g., 30202) ---
-  function getCopyCodeText(fullCode) {
-      if (!fullCode || fullCode === DEFAULT_CODE_TEXT) {
-          return null;
-      }
-      return fullCode.split('-')[0];
-  }
-
-  // --- Utility Functions (setupSelect2, clearDropdowns, copyTextToClipboard) ---
-
-  function setupSelect2($select) {
-    $select.select2({
-      placeholder: $select.find("option:first").text(),
-      allowClear: true,
-      width: "resolve",
-      dropdownParent: $(document.body),
-    });
-
-    $select.on("select2:open", function () {
-      const data = $select.data("select2");
-      if (!data || !data.$dropdown) return;
-      const $dropdown = data.$dropdown;
-      const $box = $select.closest(".small-box");
-      if ($box.length === 0) return;
-      const rect = $box[0].getBoundingClientRect();
-      const left = Math.round(rect.left + window.pageXOffset);
-      const width = Math.round(rect.width);
-      $dropdown.css({
-        width: width + "px",
-        left: left + "px",
-        "box-sizing": "border-box",
-      });
-    });
-
-    $(window).on("resize.select2-align", function () {
-      const data = $select.data("select2");
-      if (data && data.$dropdown && data.$dropdown.is(":visible")) {
-        const $box = $select.closest(".small-box");
-        if ($box.length === 0) return;
-        const rect = $box[0].getBoundingClientRect();
-        const left = Math.round(rect.left + window.pageXOffset);
-        const width = Math.round(rect.width);
-        data.$dropdown.css({ left: left + "px", width: width + "px" });
-      }
-    });
-  }
-
-  function clearDropdowns() {
-    $province.val(null).trigger("change.select2");
-    $district
-      .empty()
-      .append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", ""))
-      .val(null)
-      .trigger("change.select2");
-    $commune
-      .empty()
-      .append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", ""))
-      .val(null)
-      .trigger("change.select2");
-  }
-
-  function copyTextToClipboard($button, textToCopy) {
-    if (!textToCopy || $button.prop("disabled")) return;
-
-    const tempTextarea = $("<textarea>")
-      .val(textToCopy)
-      .appendTo("body")
-      .select();
-
-    try {
-      document.execCommand("copy");
-      const originalText = $button.text();
-      $button.text("ចម្លងរួចរាល់");
-      setTimeout(function () {
-        $button.text(originalText);
-      }, 1500);
-    } catch (err) {
-      console.error("Could not copy text: ", err);
-      alert(`បរាជ័យក្នុងការចម្លង។ សូមចម្លងដោយដៃ៖ ${textToCopy}`);
-    } finally {
-      tempTextarea.remove();
-    }
-  }
-
-
-  // --- MODIFIED: Updates the displayed code and manages visibility ---
-  function updateFullAddress() {
-    if ($codeInput.val().trim() !== "") {
-      return;
-    }
-
-    const provinceName = $province.val()
-      ? $province.find("option:selected").text()
-      : null;
-    const districtName = $district.val()
-      ? $district.find("option:selected").text()
-      : null;
-    const communeName = $commune.val()
-      ? $commune.find("option:selected").text()
-      : null;
-
-    const provinceId = $province.val();
-    const districtId = $district.val();
-    const communeId = $commune.val();
-
-    if (communeName && districtName && provinceName) {
-      const fullAddress = `${communeName} ${districtName} ${provinceName}`;
-      const fullCode = `${communeId}-${districtId}-${provinceId}`; // C-D-P format
-      
-      const displayCode = getCopyCodeText(fullCode); 
-
-      $addressContent.text(fullAddress);
-      $codeContent.text(displayCode); 
-      
-      $copyAddressButton.prop("disabled", false);
-      $copyCodeButton.prop("disabled", false);
-      
-      // SHOW results on successful selection
-      $outputContainer.removeClass('hidden'); 
-    } else {
-      $addressContent.text(DEFAULT_ADDRESS_TEXT);
-      $codeContent.text(DEFAULT_CODE_TEXT);
-
-      $copyAddressButton.prop("disabled", true);
-      $copyCodeButton.prop("disabled", true);
-      
-      // HIDE results if selection is incomplete
-      $outputContainer.addClass('hidden');
-    }
-  }
-  // -------------------------------------------------------------------------
-
-
-  // Event listener for the Address Copy button (copies full address text)
-  $copyAddressButton.on("click", function () {
-    const textToCopy = $addressContent.text().trim();
-    copyTextToClipboard($(this), textToCopy);
-  });
-
-  // Event listener for Code Copy button (copies the text currently displayed in the box)
-  $copyCodeButton.on("click", function () {
-    // Since #codeContent only displays the short code, we copy it directly.
-    const textToCopy = $codeContent.text().trim();
+    let provinces = [];
+    let districts = [];
+    let communes = [];
+    let villages = [];
     
-    if (textToCopy && textToCopy !== DEFAULT_CODE_TEXT) {
-      copyTextToClipboard($(this), textToCopy);
-    }
-  });
+    // Flag to ignore dropdown change events when they are triggered by the lookup function
+    let isProgrammaticSelection = false; 
 
-  // --- CORE LOGIC: Dynamic Code Lookup ---
+    // =========================================================================
+    // ---- UTILITY HELPERS (from ui_utils.js) ----
+    // =========================================================================
 
-  function findAddressByCode(code) {
-    const normalizedInput = code.trim().toUpperCase();
-
-    // 1. Try reverse lookup by exact address text
-    if (reverseAddressMap[normalizedInput]) {
-      const pDCcode = reverseAddressMap[normalizedInput];
-      const [provinceId, districtId, communeId] = pDCcode.split("-");
-      const displayCode = `${communeId}-${districtId}-${provinceId}`;
-      return {
-        fullAddress: normalizedInput,
-        fullCode: displayCode,
-      };
+    function isNumericString(s) {
+        return typeof s === "string" && /^\d+$/.test(s);
     }
 
-    // 2. Try exact code match (P-D-C format) in the addressMap
-    if (addressMap[normalizedInput]) {
-      const parts = normalizedInput.split("-");
-      const [provinceId, districtId, communeId] = parts;
-      const displayCode = `${communeId}-${districtId}-${provinceId}`;
-      return {
-        fullAddress: addressMap[normalizedInput],
-        fullCode: displayCode,
-      };
+    function toStr(v) {
+        if (v === null || v === undefined) return "";
+        return String(v);
     }
 
-    // 3. Try partial code match (P, D, or C ID)
-    const isPartialCode = !normalizedInput.includes("-");
-    if (isPartialCode) {
-      const searchId = parseInt(normalizedInput);
-      if (isNaN(searchId)) return null;
+    // pad with zeros on left (e.g., 1 -> "01")
+    function padLeft(s, length) {
+        s = toStr(s);
+        while (s.length < length) s = "0" + s;
+        return s;
+    }
 
-      const matchedCommune = communes.find((c) => c.id === searchId);
-      if (matchedCommune) {
-        const communeName = matchedCommune.name;
-        const matchedDistrict = districts.find(
-          (d) => d.id === matchedCommune.districtId
-        );
-        const matchedProvince = provinces.find(
-          (p) => p.id === matchedDistrict?.provinceId
-        );
-        if (matchedDistrict && matchedProvince) {
-          const fullAddress = `${communeName} ${matchedDistrict.name} ${matchedProvince.name}`;
-          const reconstructedCode = `${matchedCommune.id}-${matchedDistrict.id}-${matchedProvince.id}`;
-          return { fullAddress, fullCode: reconstructedCode };
+    // derive parent ids from an id string by slicing prefixes (returns padded IDs)
+    function deriveParentsFromId(idStr) {
+        const s = toStr(idStr);
+        const res = {};
+        if (s.length >= 2) res.provinceId = padLeft(s.slice(0, 2), 2);
+        if (s.length >= 4) res.districtId = padLeft(s.slice(0, 4), 4);
+        if (s.length >= 6) res.communeId = padLeft(s.slice(0, 6), 6);
+        return res;
+    }
+
+    function setupSelect2($select) {
+        // Destroy existing Select2 instance if present
+        if ($select.hasClass("select2-hidden-accessible")) {
+            $select.select2("destroy");
         }
-      }
+        const placeholder = $select.find("option:first").text();
+        $select.select2({
+            placeholder: placeholder,
+            allowClear: true,
+            width: "resolve",
+            dropdownParent: $(document.body),
+        });
+        // Ensure placeholder is shown initially if no value is set
+        if (!$select.val()) {
+             $select.val(null).trigger("change.select2");
+        }
+    }
 
-      const matchedDistrict = districts.find((d) => d.id === searchId);
-      if (matchedDistrict) {
-        const matchedProvince = provinces.find(
-          (p) => p.id === matchedDistrict.provinceId
-        );
+    function copyTextToClipboard($button, textToCopy) {
+        if (!textToCopy || $button.prop("disabled") || textToCopy === DEFAULT_CODE_TEXT || textToCopy === DEFAULT_ADDRESS_TEXT) return;
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = $button.text();
+                $button.text("ចម្លងរួចរាល់");
+                setTimeout(() => { $button.text(originalText); }, 1500);
+            }).catch(() => {
+                fallbackCopy(textToCopy, $button);
+            });
+        } else {
+            fallbackCopy(textToCopy, $button);
+        }
+
+        function fallbackCopy(text, $btn) {
+            const tempTextarea = $("<textarea>")
+                .val(text)
+                .appendTo("body")
+                .select();
+
+            try {
+                document.execCommand("copy");
+                const originalText = $btn.text();
+                $btn.text("ចម្លងរួចរាល់");
+                setTimeout(function () {
+                    $btn.text(originalText);
+                }, 1500);
+            } finally {
+                tempTextarea.remove();
+            }
+        }
+    }
+
+
+    // =========================================================================
+    // ---- DATA & INITIALIZATION (from data_loader.js) ----
+    // =========================================================================
+
+    async function loadDataAndInitialize() {
+        try {
+            const [
+                khetResponse, srokResponse, khumResponse, phumResponse,
+            ] = await Promise.all([
+                fetch("data/khet_data.json"),
+                fetch("data/srok_data.json"),
+                fetch("data/khum_data.json"),
+                fetch("data/phum_data.json"),
+            ]);
+
+            const khetData = await khetResponse.json();
+            const srokData = await srokResponse.json();
+            const khumData = await khumResponse.json();
+            const phumData = await phumResponse.json();
+
+            // --- Normalize Provinces ---
+            provinces = khetData.map((item) => {
+                const rawId = toStr(item.id);
+                const id2 = isNumericString(rawId) ? padLeft(rawId, 2) : rawId;
+                return { id: id2, name: item.khmer_name || item.english_name || `Province ${rawId}` };
+            });
+
+            // --- Normalize Districts ---
+            districts = srokData.map((item) => {
+                const rawId = toStr(item.id);
+                const parents = deriveParentsFromId(rawId);
+                return { id: rawId, name: item.khmer_name || item.english_name || `District ${rawId}`,
+                    provinceId: parents.provinceId || padLeft(item.class, 2), };
+            });
+
+            // --- Normalize Communes ---
+            communes = khumData.map((item) => {
+                const rawId = toStr(item.id);
+                const parents = deriveParentsFromId(rawId);
+                return { id: rawId, name: item.khmer_name || item.english_name || `Commune ${rawId}`,
+                    districtId: parents.districtId || padLeft(item.class, 4), };
+            });
+
+            // --- Normalize Villages ---
+            villages = phumData.map((item) => {
+                const rawId = toStr(item.id);
+                const parents = deriveParentsFromId(rawId);
+                return { id: rawId, name: item.khmer_name || item.english_name || `Village ${rawId}`,
+                    communeId: parents.communeId || padLeft(item.class, 6), };
+            });
+
+        } catch (error) {
+            console.error("Failed to load geographical data:", error);
+            $addressContent.text(`បរាជ័យក្នុងការផ្ទុកទិន្នន័យ (ពិនិត្យ Console សម្រាប់ Error: ${error.message})`);
+            $codeContent.text(DEFAULT_CODE_TEXT);
+            $copyAddressButton.prop("disabled", true);
+            $copyCodeButton.prop("disabled", true);
+            $outputContainer.removeClass("hidden");
+            return;
+        }
+
+        // --- Populate Province Dropdown (Standard Select - No Select2 applied here) ---
+        $province.empty().append(new Option("សូមជ្រើសរើសរាជធានី / ខេត្ត", ""));
+        provinces.forEach((item) => {
+            $province.append(new Option(item.name, item.id));
+        });
+        
+        // initialize the dependent selects (These ARE initialized with Select2)
+        setupSelect2($district);
+        setupSelect2($commune);
+        setupSelect2($village);
+        
+        $province.val(null).trigger("change"); // Standard HTML change event
+        $lookupButton.prop("disabled", true); 
+        updateFullAddress(); 
+    }
+
+
+    // =========================================================================
+    // ---- CORE LOGIC & EVENTS (from logic.js) ----
+    // =========================================================================
+
+    // ---- Dropdown Filtering Helpers (Copied for completeness) ----
+
+    function loadDistrictsOptions(provinceId, $select) {
+        const filtered = districts.filter(d => d.provinceId === provinceId);
+        filtered.forEach(d => $select.append(new Option(d.name, d.id)));
+        setupSelect2($select);
+    }
+
+    function loadCommunesOptions(districtId, $select) {
+        const filtered = communes.filter(c => c.districtId === districtId);
+        filtered.forEach(c => $select.append(new Option(c.name, c.id)));
+        setupSelect2($select);
+    }
+
+    function loadVillagesOptions(communeId, $select) {
+        const filtered = villages.filter(v => v.communeId === communeId);
+        filtered.forEach(v => $select.append(new Option(v.name, v.id)));
+        setupSelect2($select);
+    }
+
+    function clearDropdowns() {
+        isProgrammaticSelection = true;
+        
+        // Clear province with standard HTML change event
+        $province.val(null).trigger("change"); 
+
+        // Clear dependents with Select2 change event
+        $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", "")).val(null).trigger("change.select2");
+        $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", "")).val(null).trigger("change.select2");
+        $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null).trigger("change.select2");
+        
+        isProgrammaticSelection = false;
+    }
+
+
+    // ---- Programmatic Selection (Lookup result population - Includes final fix) ----
+
+    function selectAddressInDropdowns(provinceId, districtId, communeId, villageId) {
+        isProgrammaticSelection = true;
+        
+        // 1. Province: Set value on the standard HTML select element first
+        $province.val(provinceId); 
+        $province.trigger("change"); 
+
+        // FIX: Only initialize Select2 on $province now that the value is set 
+        if (!$province.hasClass("select2-hidden-accessible")) {
+             setupSelect2($province);
+        }
+        // Set value one final time and trigger Select2 update
+        $province.val(provinceId).trigger("change.select2"); 
+        
+        // Use a delay to ensure the Province's visual update completes before cascading
+        setTimeout(() => {
+            // 2. District (Load and select)
+            $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", ""));
+            loadDistrictsOptions(provinceId, $district);
+            $district.val(districtId).trigger("change.select2");
+            
+            // 3. Commune (Load and select)
+            $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", ""));
+            loadCommunesOptions(districtId, $commune);
+            $commune.val(communeId).trigger("change.select2");
+
+            // 4. Village (Load and select)
+            $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", ""));
+            if (communeId) {
+                  loadVillagesOptions(communeId, $village);
+            }
+            $village.val(villageId).trigger("change.select2");
+            
+            isProgrammaticSelection = false;
+        }, 100); 
+    }
+
+
+    // ---- Address Display Logic ----
+
+    function updateFullAddress() {
+        const inputCode = $codeInput.val().trim();
+        
+        if (isProgrammaticSelection || inputCode !== "") {
+            $outputContainer.addClass("hidden");
+            $lookupButton.prop("disabled", !inputCode); 
+            return;
+        }
+
+        const provinceText = $province.val() ? $province.find("option:selected").text() : null;
+        const districtText = $district.val() ? $district.find("option:selected").text() : null;
+        const communeText = $commune.val() ? $commune.find("option:selected").text() : null;
+        const villageText = $village.val() ? $village.find("option:selected").text() : null;
+
+        const provinceId = $province.val();
+        const districtId = $district.val();
+        const communeId = $commune.val();
+        const villageId = $village.val();
+
+        let addressParts = [];
+        let codeParts = []; 
+        
+        if (villageText && villageId) { addressParts.push(villageText); codeParts.push(villageId); }
+        if (communeText && communeId) { addressParts.push(communeText); if (codeParts.length === 0) codeParts.push(communeId); }
+        if (districtText && districtId) { addressParts.push(districtText); if (codeParts.length === 0) codeParts.push(districtId); }
+        if (provinceText && provinceId) { addressParts.push(provinceText); if (codeParts.length === 0) codeParts.push(provinceId); }
+        
+        if (addressParts.length > 0) {
+            const fullAddress = addressParts.join(', '); 
+            const finalCode = codeParts[0];
+
+            $addressContent.text(fullAddress);
+            $codeContent.text(finalCode);
+            $copyAddressButton.prop("disabled", false);
+            $copyCodeButton.prop("disabled", false);
+            $outputContainer.removeClass("hidden");
+        } else {
+            $addressContent.text(DEFAULT_ADDRESS_TEXT);
+            $codeContent.text(DEFAULT_CODE_TEXT);
+            $copyAddressButton.prop("disabled", true);
+            $copyCodeButton.prop("disabled", true);
+            $outputContainer.addClass("hidden");
+        }
+    }
+
+
+    // ---- Code Lookup Logic ----
+
+    function findAddressByCode(code) {
+        const normalizedInput = code.trim();
+        
+        // Check for Village (8 digits)
+        const matchedVillage = villages.find(v => v.id === normalizedInput);
+        if (matchedVillage) {
+            const matchedCommune = communes.find(c => c.id === matchedVillage.communeId);
+            const matchedDistrict = districts.find(d => d.id === matchedCommune?.districtId);
+            const matchedProvince = provinces.find(p => p.id === matchedDistrict?.provinceId);
+            if (matchedCommune && matchedDistrict && matchedProvince) {
+                const fullAddress = `${matchedVillage.name}, ${matchedCommune.name}, ${matchedDistrict.name}, ${matchedProvince.name}`;
+                return { fullAddress, fullCode: normalizedInput, pId: matchedProvince.id, dId: matchedDistrict.id, cId: matchedCommune.id, vId: normalizedInput };
+            }
+        }
+        
+        // Check for Commune (6 digits)
+        const matchedCommune = communes.find((c) => c.id === normalizedInput);
+        if (matchedCommune) {
+            const matchedDistrict = districts.find((d) => d.id === matchedCommune.districtId);
+            const matchedProvince = provinces.find((p) => p.id === matchedDistrict?.provinceId);
+            if (matchedDistrict && matchedProvince) {
+                const fullAddress = `${matchedCommune.name}, ${matchedDistrict.name}, ${matchedProvince.name}`;
+                return { fullAddress, fullCode: normalizedInput, pId: matchedProvince.id, dId: matchedDistrict.id, cId: normalizedInput, vId: null };
+            }
+        }
+
+        // Check for District (4 digits)
+        const matchedDistrict = districts.find((d) => d.id === normalizedInput);
+        if (matchedDistrict) {
+            const matchedProvince = provinces.find((p) => p.id === matchedDistrict.provinceId);
+            if (matchedProvince) {
+                const fullAddress = `${matchedDistrict.name}, ${matchedProvince.name}`;
+                return { fullAddress, fullCode: normalizedInput, pId: matchedProvince.id, dId: normalizedInput, cId: null, vId: null };
+            }
+        }
+
+        // Check for Province (2 digits)
+        const matchedProvince = provinces.find((p) => p.id === normalizedInput);
         if (matchedProvince) {
-          const fullAddress = `${matchedDistrict.name} ${matchedProvince.name}`;
-          const reconstructedCode = `${matchedDistrict.id}-${matchedProvince.id}`;
-          return { fullAddress, fullCode: reconstructedCode };
+            const fullAddress = `${matchedProvince.name}`;
+            return { fullAddress, fullCode: normalizedInput, pId: normalizedInput, dId: null, cId: null, vId: null };
         }
-      }
-
-      const matchedProvince = provinces.find((p) => p.id === searchId);
-      if (matchedProvince) {
-        const fullAddress = `${matchedProvince.name}`;
-        const reconstructedCode = `${matchedProvince.id}`; 
-        return { fullAddress, fullCode: reconstructedCode };
-      }
+        
+        return null;
     }
 
-    return null; 
-  }
-
-  // --- MODIFIED: Updates the displayed code and manages visibility ---
-  function lookupCode() {
-    const inputCode = $codeInput.val().trim();
-    clearDropdowns();
-    $codeInput.css("border", "1px solid #e0e0e0");
-
-    // HIDE container immediately on new search attempt
-    $outputContainer.addClass('hidden');
-
-    if (!inputCode) {
-      $addressContent.text(
-        "សូមបញ្ចូលលេខកូដ (ឧ. 230401, 2304, 23, ឬ អាសយដ្ឋានពេញលេញ)"
-      );
-      $codeContent.text(DEFAULT_CODE_TEXT);
-      $copyAddressButton.prop("disabled", true);
-      $copyCodeButton.prop("disabled", true);
-      return;
-    }
-
-    const result = findAddressByCode(inputCode);
-
-    if (result) {
-      const displayCode = getCopyCodeText(result.fullCode); 
-
-      $addressContent.text(result.fullAddress);
-      $codeContent.text(displayCode); 
-      $copyAddressButton.prop("disabled", false);
-      $copyCodeButton.prop("disabled", false);
-      
-      // SHOW results on successful lookup
-      $outputContainer.removeClass('hidden'); 
-    } else {
-      $addressContent.text(
-        `អាសយដ្ឋាន ឬលេខកូដ "${inputCode}" មិនត្រឹមត្រូវ ឬរកមិនឃើញ`
-      );
-      $codeContent.text(DEFAULT_CODE_TEXT);
-      $copyAddressButton.prop("disabled", true);
-      $copyCodeButton.prop("disabled", true);
-      $codeInput.css("border", "1px solid red");
-      
-      // HIDE results on failure
-      $outputContainer.addClass('hidden'); 
-    }
-  }
-  // -------------------------------------------------------------------------
-
-
-  async function loadDataAndInitialize() {
-    let data;
-
-    try {
-      const response = await fetch("datas.json");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      data = await response.json();
-    } catch (error) {
-      console.error("Failed to load datas.json:", error);
-      $addressContent.text(
-        `បរាជ័យក្នុងការផ្ទុកទិន្នន័យ (ពិនិត្យ Console សម្រាប់ Error: ${error.message})`
-      );
-      $codeContent.text(DEFAULT_CODE_TEXT);
-      $copyAddressButton.prop("disabled", true);
-      $copyCodeButton.prop("disabled", true);
-      return;
-    }
-
-    provinces = data.provinces || [];
-    districts = data.districts || [];
-    communes = data.communes || [];
-    addressMap = data.addressMap || {};
-
-    for (const code in addressMap) {
-      reverseAddressMap[addressMap[code].trim().toUpperCase()] = code;
-    }
-
-    provinces.forEach((item) => {
-      $province.append(new Option(item.name, item.id));
-    });
-
-    $province.on("change", function () {
-      const selectedProvinceId = parseInt($(this).val());
-      $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", ""));
-      $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", ""));
-      if (selectedProvinceId) {
-        const filtered = districts.filter(
-          (d) => d.provinceId === selectedProvinceId
-        );
-        filtered.forEach((d) => {
-          $district.append(new Option(d.name, d.id));
-        });
-      }
-      $district.val(null).trigger("change.select2");
-      $commune.val(null).trigger("change.select2");
-      $codeInput.val("");
-      $codeInput.css("border", "1px solid #e0e0e0");
-      updateFullAddress();
-    });
-
-    $district.on("change", function () {
-      const selectedDistrictId = parseInt($(this).val());
-      $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", ""));
-      if (selectedDistrictId) {
-        const filtered = communes.filter(
-          (c) => c.districtId === selectedDistrictId
-        );
-        filtered.forEach((c) => {
-          $commune.append(new Option(c.name, c.id));
-        });
-      }
-      $commune.val(null).trigger("change.select2");
-      updateFullAddress();
-    });
-
-    $commune.on("change", updateFullAddress);
-
-    $lookupButton.on("click", lookupCode);
-
-    $codeInput.on("keypress", function (e) {
-      if (e.which === 13) {
-        e.preventDefault();
-        lookupCode();
-      }
-    });
-
-    $codeInput.on("input", function () {
-      if ($(this).val().trim() === "") {
-        updateFullAddress();
+    function lookupCode() {
+        const inputCode = $codeInput.val().trim();
         $codeInput.css("border", "1px solid #e0e0e0");
-      }
-    });
+        $outputContainer.addClass("hidden");
 
-    setupSelect2($province);
-    setupSelect2($district);
-    setupSelect2($commune);
-    
-    // Initial check: if nothing is selected/entered, hide the output
-    updateFullAddress(); 
-  }
+        if (!inputCode) {
+            $addressContent.text("សូមបញ្ចូលលេខកូដ (ឧ. 23040101, 230401, 2304, ឬ 23)");
+            $codeContent.text(DEFAULT_CODE_TEXT);
+            $copyAddressButton.prop("disabled", true);
+            $copyCodeButton.prop("disabled", true);
+            $lookupButton.prop("disabled", true); 
+            return;
+        }
 
-  loadDataAndInitialize();
+        if (!isNumericString(inputCode) || inputCode.length > 8 || inputCode.length < 2 || inputCode.length % 2 !== 0) {
+              $addressContent.text(`លេខកូដ "${inputCode}" មិនត្រឹមត្រូវតាមទម្រង់។ ត្រូវតែជាលេខ ២, ៤, ៦, ឬ ៨ ខ្ទង់។`);
+              $codeContent.text(DEFAULT_CODE_TEXT);
+              $codeInput.css("border", "1px solid red");
+              $lookupButton.prop("disabled", false); 
+              return;
+        }
+
+        const result = findAddressByCode(inputCode);
+        clearDropdowns();
+
+        if (result) {
+            $addressContent.text(result.fullAddress);
+            $codeContent.text(result.fullCode);
+            $copyAddressButton.prop("disabled", false);
+            $copyCodeButton.prop("disabled", false);
+            $outputContainer.removeClass("hidden");
+            
+            selectAddressInDropdowns(result.pId, result.dId, result.cId, result.vId);
+
+        } else {
+            $addressContent.text(`អាសយដ្ឋាន ឬលេខកូដ "${inputCode}" មិនត្រឹមត្រូវ ឬរកមិនឃើញ`);
+            $codeContent.text(DEFAULT_CODE_TEXT);
+            $copyAddressButton.prop("disabled", true);
+            $copyCodeButton.prop("disabled", true);
+            $codeInput.css("border", "1px solid red");
+        }
+    }
+
+
+    // ---- Event Handlers Setup ----
+
+    function attachEventHandlers() {
+        // Province change -> filter districts
+        $province.off("change").on("change", function () {
+            if (isProgrammaticSelection) return;
+            const selectedProvinceId = $(this).val();
+
+            // FIX: Ensure Select2 is initialized if manually interacted with
+            if (!$province.hasClass("select2-hidden-accessible")) {
+                 setupSelect2($province);
+            }
+
+            // Clear/Reset dependent dropdowns
+            $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", "")).val(null);
+            $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", "")).val(null);
+            $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null);
+            
+            if (selectedProvinceId) { loadDistrictsOptions(selectedProvinceId, $district); }
+            
+            setupSelect2($district); setupSelect2($commune); setupSelect2($village);
+
+            $codeInput.val(""); 
+            $codeInput.css("border", "1px solid #e0e0e0");
+            updateFullAddress();
+        });
+
+        // District change -> filter communes
+        $district.off("change").on("change", function () {
+            if (isProgrammaticSelection) return;
+            const selectedDistrictId = $(this).val();
+            $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", "")).val(null);
+            $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null);
+
+            if (selectedDistrictId) { loadCommunesOptions(selectedDistrictId, $commune); }
+            setupSelect2($village); 
+            
+            $codeInput.val(""); 
+            $codeInput.css("border", "1px solid #e0e0e0");
+            updateFullAddress();
+        });
+
+        // Commune change -> filter villages
+        $commune.off("change").on("change", function () {
+            if (isProgrammaticSelection) return;
+            const selectedCommuneId = $(this).val();
+            $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null);
+
+            if (selectedCommuneId) { loadVillagesOptions(selectedCommuneId, $village); }
+            
+            $codeInput.val("");
+            $codeInput.css("border", "1px solid #e0e0e0");
+            updateFullAddress();
+        });
+
+        // Village change (deepest level)
+        $village.off("change").on("change", function() {
+            if (isProgrammaticSelection) return;
+            $codeInput.val("");
+            $codeInput.css("border", "1px solid #e0e0e0");
+            updateFullAddress();
+        });
+
+        // Lookup Handlers
+        $lookupButton.off("click").on("click", lookupCode);
+
+        $codeInput.off("keypress").on("keypress", function (e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                lookupCode();
+            }
+        });
+
+        $codeInput.off("input").on("input", function () {
+            const inputVal = $(this).val().trim();
+            $lookupButton.prop("disabled", !inputVal); 
+            
+            if (inputVal === "") {
+                updateFullAddress();
+                $codeInput.css("border", "1px solid #e0e0e0");
+            }
+        });
+
+        // Copy Handlers
+        $copyAddressButton.off("click").on("click", function () {
+            const textToCopy = $addressContent.text().trim();
+            copyTextToClipboard($(this), textToCopy);
+        });
+
+        $copyCodeButton.off("click").on("click", function () {
+            const textToCopy = $codeContent.text().trim();
+            if (textToCopy && textToCopy !== DEFAULT_CODE_TEXT) {
+                copyTextToClipboard($(this), textToCopy);
+            }
+        });
+    }
+
+    // Run Initialization and attach events
+    attachEventHandlers(); 
+    loadDataAndInitialize();
 });
