@@ -45,6 +45,7 @@ h2 {
 /* ------------------------------------------- */
 
 .code-search-component {
+<<<<<<< HEAD
     display: flex;
     align-items: center;
     gap: 15px; /* Space between input field and button */
@@ -63,6 +64,26 @@ h2 {
     font-size: 16px;
     background-color: white;
     color: #333;
+=======
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 16px 12px 12px;
+  background-color: #f7f7f7;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+#codeInput {
+  flex-grow: 1;
+  width: 250px;
+  padding: 12px 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  font-size: 16px;
+  background-color: white;
+  color: #333;
+>>>>>>> edcb60b8d1bb81825d94aede7f2dde245e3ca2ba
 }
 
 #codeInput::placeholder {
@@ -79,6 +100,7 @@ h2 {
 /* ------------------------------------------- */
 
 .small-box-container {
+<<<<<<< HEAD
     display: flex;
     flex-wrap: wrap;
     gap: 25px; /* Horizontal gap between small boxes */
@@ -109,7 +131,33 @@ h2 {
 
 .small-box-container:last-child .small-box {
     margin-bottom: 0; /* Clears margin on the last row */
+=======
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  /* FINAL FIX: Ensure the entire container has bottom margin */
+  margin-bottom: 40px;
 }
+
+.small-box {
+  background: #f7f7f7;
+  padding: 25px; /* Restored original padding */
+  border-radius: 18px;
+  flex: 1;
+  min-width: 300px;
+  box-sizing: border-box;
+  border: 1px solid #f0f0f0;
+  /* FINAL FIX: Add margin to the bottom of each small box for stacking space */
+  margin-bottom: 25px; 
+>>>>>>> edcb60b8d1bb81825d94aede7f2dde245e3ca2ba
+}
+
+/* Clear margin for the last row of small boxes in the container */
+.small-box-container:last-child .small-box {
+  margin-bottom: 0;
+}
+
 
 label {
     display: block;
@@ -247,20 +295,26 @@ label {
     top: 0;
 }
 
+<<<<<<< HEAD
 .copy-button:active {
     top: 0;
     box-shadow: none;
 }
 
+=======
+>>>>>>> edcb60b8d1bb81825d94aede7f2dde245e3ca2ba
 .blue-button {
     background-color: #70b34f; /* Green color for address copy */
     color: white;
 }
 
+<<<<<<< HEAD
 .blue-button:hover:not(:disabled) {
     background-color: #5d9241;
 }
 
+=======
+>>>>>>> edcb60b8d1bb81825d94aede7f2dde245e3ca2ba
 .green-button {
     background-color: #70b34f; /* Green color for search and code copy */
     color: white;
@@ -275,10 +329,13 @@ label {
     border: none;
 }
 
+<<<<<<< HEAD
 .green-button:hover:not(:disabled) {
     background-color: #5d9241;
 }
 
+=======
+>>>>>>> edcb60b8d1bb81825d94aede7f2dde245e3ca2ba
 .copy-button:disabled,
 .green-button:disabled {
     background-color: #cccccc;
@@ -293,6 +350,7 @@ label {
 /* ------------------------------------------- */
 
 @media (max-width: 900px) {
+<<<<<<< HEAD
     .big-box {
         padding: 15px;
         margin: 5px;
@@ -349,6 +407,71 @@ label {
         flex: 1 1 100%;
         min-height: unset;
     }
+=======
+  .big-box {
+    padding: 20px;
+    margin: 15px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  /* Stack sections vertically and increase spacing (gap) */
+  .title-and-search-wrapper,
+  .final-output-container {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  /* Small box container spacing fix */
+  .small-box-container {
+      flex-direction: column;
+      gap: 15px; /* Increased gap between dropdown boxes */
+      align-items: stretch;
+  }
+
+  /* Search component sizing fix */
+  .code-search-component {
+    gap: 10px;
+    padding: 18px;
+  }
+
+  #codeInput {
+    padding: 14px 12px;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .green-button {
+    padding: 10px 14px; /* Small button on mobile */
+    font-size: 14px;
+  }
+
+  .small-box {
+    min-width: 100%;
+    padding: 18px;
+    /* Remove bottom margin inside the media query, as the container gap handles it */
+    margin-bottom: 0; 
+  }
+
+  .address-output-box,
+  .code-output-box {
+    padding: 18px;
+    flex: 1 1 100%;
+    min-height: unset;
+  }
+
+  .address-output-box {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    min-height: 0px;
+  }
+>>>>>>> edcb60b8d1bb81825d94aede7f2dde245e3ca2ba
 
     .address-output-box {
         flex-direction: row;
