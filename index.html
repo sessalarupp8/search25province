@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ជ្រើសរើស ខេត្ត ស្រុក/ខណ្ឌ ឃុំ/សង្កាត់ និង ភូមិ</title>
 
-    <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- Khmer Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Bayon&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -24,14 +22,16 @@
         <div class="title-and-search-wrapper">
             <h2>ជ្រើសរើស តំបន់</h2>
 
-            <!-- SEARCH CODE -->
             <div class="code-search-component">
                 <input type="text" id="codeInput" placeholder="សូមបញ្ចូលលេខកូដ (ឧ. 10101)" pattern="[0-9-]*" />
                 <button id="lookupButton" class="green-button">ស្វែងរក</button>
             </div>
-        </div>
+            
+            <div class="music-controls">
+                <span id="musicToggleIcon" class="music-icon-style" title="Toggle Music">🔈</span> 
+            </div>
+            </div>
 
-        <!-- SELECT DROPDOWNS -->
         <div class="small-box-container">
 
             <div class="small-box">
@@ -64,7 +64,6 @@
 
         </div>
 
-        <!-- FINAL OUTPUT -->
         <div class="final-output-container hidden">
 
             <div class="address-output-box">
@@ -83,7 +82,11 @@
         </div>
     </div>
 
-    <!-- Load Your Address Scripts -->
+    <audio id="backgroundMusic" loop>
+        <source src="audio/likeAdino.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script src="script.js"></script>
 
 

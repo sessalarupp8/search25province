@@ -12,6 +12,14 @@ $(document).ready(function () {
     const $copyCodeButton = $("#copyCodeButton");
     const $outputContainer = $(".final-output-container");
 
+    // ✅ NEW: Audio Elements and State
+    const audioElement = document.getElementById('backgroundMusic'); // Vanilla JS element
+    const $musicToggleIcon = $("#musicToggleIcon");
+    let isMusicPlaying = false; 
+
+    // Set initial volume and state (volume 50% by default)
+    audioElement.volume = 0.5; 
+
     // --- Constants & State ---
     const DEFAULT_ADDRESS_TEXT = "សូមជ្រើសរើស ឃុំ/សង្កាត់ ស្រុក/ខណ្ឌ និង រាជធានី/ខេត្ត";
     const DEFAULT_CODE_TEXT = "N/A";
@@ -23,6 +31,39 @@ $(document).ready(function () {
     
     // Flag to ignore dropdown change events when they are triggered by the lookup function
     let isProgrammaticSelection = false; 
+
+    // =========================================================================
+    // ---- MUSIC CONTROL LOGIC ----
+    // =========================================================================
+
+    function toggleMusic() {
+        if (isMusicPlaying) {
+            // Stop the music
+            audioElement.pause();
+            $musicToggleIcon.text("🔈"); // Speaker off icon
+            isMusicPlaying = false;
+        } else {
+            // Try to play the music
+            const playPromise = audioElement.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Playback started successfully
+                    $musicToggleIcon.text("🔊"); // Speaker ON icon
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    // Autoplay failed (Browser policy requires user interaction)
+                    console.warn("Audio playback blocked by browser.", error);
+                    $musicToggleIcon.text("🚫"); // Temporary error icon
+                    setTimeout(() => {
+                        $musicToggleIcon.text("🔈");
+                    }, 1500);
+                    isMusicPlaying = false;
+                });
+            }
+        }
+    }
+
 
     // =========================================================================
     // ---- UTILITY HELPERS (from ui_utils.js) ----
@@ -189,7 +230,7 @@ $(document).ready(function () {
     // ---- CORE LOGIC & EVENTS (from logic.js) ----
     // =========================================================================
 
-    // ---- Dropdown Filtering Helpers (Copied for completeness) ----
+    // ---- Dropdown Filtering Helpers ----
 
     function loadDistrictsOptions(provinceId, $select) {
         const filtered = districts.filter(d => d.provinceId === provinceId);
@@ -224,7 +265,7 @@ $(document).ready(function () {
     }
 
 
-    // ---- Programmatic Selection (Lookup result population - Includes final fix) ----
+    // ---- Programmatic Selection (Lookup result population) ----
 
     function selectAddressInDropdowns(provinceId, districtId, communeId, villageId) {
         isProgrammaticSelection = true;
@@ -255,7 +296,7 @@ $(document).ready(function () {
             // 4. Village (Load and select)
             $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", ""));
             if (communeId) {
-                  loadVillagesOptions(communeId, $village);
+                 loadVillagesOptions(communeId, $village);
             }
             $village.val(villageId).trigger("change.select2");
             
@@ -407,84 +448,52 @@ $(document).ready(function () {
     // ---- Event Handlers Setup ----
 
     function attachEventHandlers() {
-        // Province change -> filter districts
+        // Dropdown handlers (Province, District, Commune, Village)
         $province.off("change").on("change", function () {
             if (isProgrammaticSelection) return;
             const selectedProvinceId = $(this).val();
-
-            // FIX: Ensure Select2 is initialized if manually interacted with
             if (!$province.hasClass("select2-hidden-accessible")) {
                  setupSelect2($province);
             }
-
-            // Clear/Reset dependent dropdowns
             $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", "")).val(null);
             $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", "")).val(null);
             $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null);
-            
             if (selectedProvinceId) { loadDistrictsOptions(selectedProvinceId, $district); }
-            
             setupSelect2($district); setupSelect2($commune); setupSelect2($village);
-
-            $codeInput.val(""); 
-            $codeInput.css("border", "1px solid #e0e0e0");
-            updateFullAddress();
+            $codeInput.val(""); $codeInput.css("border", "1px solid #e0e0e0"); updateFullAddress();
         });
 
-        // District change -> filter communes
         $district.off("change").on("change", function () {
             if (isProgrammaticSelection) return;
             const selectedDistrictId = $(this).val();
             $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", "")).val(null);
             $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null);
-
             if (selectedDistrictId) { loadCommunesOptions(selectedDistrictId, $commune); }
-            setupSelect2($village); 
-            
-            $codeInput.val(""); 
-            $codeInput.css("border", "1px solid #e0e0e0");
-            updateFullAddress();
+            setupSelect2($village); $codeInput.val(""); $codeInput.css("border", "1px solid #e0e0e0"); updateFullAddress();
         });
 
-        // Commune change -> filter villages
         $commune.off("change").on("change", function () {
             if (isProgrammaticSelection) return;
             const selectedCommuneId = $(this).val();
             $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", "")).val(null);
-
             if (selectedCommuneId) { loadVillagesOptions(selectedCommuneId, $village); }
-            
-            $codeInput.val("");
-            $codeInput.css("border", "1px solid #e0e0e0");
-            updateFullAddress();
+            $codeInput.val(""); $codeInput.css("border", "1px solid #e0e0e0"); updateFullAddress();
         });
 
-        // Village change (deepest level)
         $village.off("change").on("change", function() {
             if (isProgrammaticSelection) return;
-            $codeInput.val("");
-            $codeInput.css("border", "1px solid #e0e0e0");
-            updateFullAddress();
+            $codeInput.val(""); $codeInput.css("border", "1px solid #e0e0e0"); updateFullAddress();
         });
 
         // Lookup Handlers
         $lookupButton.off("click").on("click", lookupCode);
-
         $codeInput.off("keypress").on("keypress", function (e) {
-            if (e.which === 13) {
-                e.preventDefault();
-                lookupCode();
-            }
+            if (e.which === 13) { e.preventDefault(); lookupCode(); }
         });
-
         $codeInput.off("input").on("input", function () {
             const inputVal = $(this).val().trim();
             $lookupButton.prop("disabled", !inputVal); 
-            
-            if (inputVal === "") {
-                updateFullAddress();
-                $codeInput.css("border", "1px solid #e0e0e0");
-            }
+            if (inputVal === "") { updateFullAddress(); $codeInput.css("border", "1px solid #e0e0e0"); }
         });
 
         // Copy Handlers
@@ -495,10 +504,11 @@ $(document).ready(function () {
 
         $copyCodeButton.off("click").on("click", function () {
             const textToCopy = $codeContent.text().trim();
-            if (textToCopy && textToCopy !== DEFAULT_CODE_TEXT) {
-                copyTextToClipboard($(this), textToCopy);
-            }
+            if (textToCopy && textToCopy !== DEFAULT_CODE_TEXT) { copyTextToClipboard($(this), textToCopy); }
         });
+
+        // ✅ NEW: Music Control Handler
+        $musicToggleIcon.off("click").on("click", toggleMusic); 
     }
 
     // Run Initialization and attach events
