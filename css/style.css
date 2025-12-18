@@ -3,7 +3,7 @@
     --primary-color: #70b34f;
     --blue-accent: #26a8d8;
     --bg-light: #f7f7f7;
-    --danger-color: #e53935; /* Added for clear button hover */
+    --danger-color: #e53935;
 }
 
 body {
@@ -36,25 +36,17 @@ body {
     position: relative;
 }
 
-/* Fix for the "x" (Clear Button) visibility and color */
 .select2-container--default .select2-selection--single .select2-selection__clear {
     cursor: pointer;
-    float: none;
     font-weight: bold;
     font-size: 20px;
     color: var(--danger-color);
     position: absolute;
-    right: 35px; /* Moves it away from the dropdown arrow */
+    right: 35px; 
     top: 50%;
     transform: translateY(-50%);
-    margin: 0;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__clear:hover {
-    color: #b71c1c;
-}
-
-/* Highlight the search box inside dropdown */
 .select2-container--default .select2-search--dropdown .select2-search__field {
     border: 2px solid var(--blue-accent) !important;
     border-radius: 8px; 
@@ -62,7 +54,6 @@ body {
     outline: none;
 }
 
-/* Highlight color for selected items in list */
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background-color: var(--primary-color) !important;
 }
@@ -93,18 +84,12 @@ body {
     font-weight: 700;
 }
 
-#codeInput:focus {
-    border-color: var(--blue-accent);
-    outline: none;
-}
-
 /* --- Output Container Layout --- */
 .final-output-container {
     display: flex;
     justify-content: space-between;
     gap: 15px;
     margin-top: 20px;
-    transition: all 0.3s ease;
 }
 
 /* --- Output Boxes --- */
@@ -132,40 +117,44 @@ body {
     padding: 10px 20px;
     border-radius: 8px; 
     font-weight: 700; 
-    cursor: pointer; 
-    transition: 0.2s;
+    cursor: pointer;
 }
 
-.copy-button:hover { 
-    filter: brightness(1.1); 
-    transform: translateY(-1px);
-}
-
-.copy-button:active {
-    transform: translateY(0px);
-}
-
-/* --- UTILITY --- */
-.hidden { 
-    display: none !important; 
-}
+.hidden { display: none !important; }
 
 /* --- RESPONSIVE DESIGN --- */
+
 @media (max-width: 900px) {
+    /* Square the main big-box only */
+    .big-box {
+        padding: 30px 20px;
+        border-radius: 0 !important; /* Forces square corners for the container only */
+        width: 100%;                 /* Fill the phone screen width */
+        margin: 0;
+        box-shadow: none;
+    }
+
     .final-output-container {
         flex-direction: column;
     }
-    .big-box {
-        padding: 30px 20px;
-    }
+
+    /* NOTE: We do NOT add border-radius: 0 to other items here.
+       This keeps the search input and output boxes ROUNDED 
+       inside the square container.
+    */
 }
 
 @media (max-width: 600px) {
     h2 { font-size: 24px; }
+    
     .address-output-box, .code-output-box {
         flex-direction: column;
         text-align: center;
         gap: 10px;
+        /* Kept rounded because we didn't override it */
     }
-    .copy-button { width: 100%; }
+    
+    .copy-button { 
+        width: 100%; 
+    }
 }
