@@ -1,398 +1,171 @@
-/* ------------------------------------------- */
-/* --- 1. GLOBAL & LAYOUT STYLES --- */
-/* ------------------------------------------- */
+/* --- Global Theme --- */
+:root {
+    --primary-color: #70b34f;
+    --blue-accent: #26a8d8;
+    --bg-light: #f7f7f7;
+    --danger-color: #e53935; /* Added for clear button hover */
+}
 
 body {
-    font-family: "Khmer OS Battambang", "Khmer OS Siemreap", Arial, sans-serif;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Battambang', "Khmer OS Battambang", sans-serif;
     background: #50b4c8;
-    overflow-x: hidden; /* Prevents horizontal scroll */
+    margin: 0; 
+    min-height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
 }
 
 .big-box {
-    background: white;
-    padding: 50px;
+    background: white; 
+    padding: 50px; 
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    width: 95%;
-    max-width: 1000px;
-    box-sizing: border-box;
+    width: 95%; 
+    max-width: 1000px; 
     text-align: center;
-    margin: 20px 0;
 }
 
-h2 {
-    margin: 0;
-    color: #333;
-    font-size: 36px;
+/* --- Select2 Colorbox Styling --- */
+.select2-container--default .select2-selection--single {
+    height: 50px !important; 
+    border-radius: 12px !important;
+    border: 1px solid #e0e0e0 !important; 
+    display: flex; 
+    align-items: center;
+    position: relative;
+}
+
+/* Fix for the "x" (Clear Button) visibility and color */
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    cursor: pointer;
+    float: none;
     font-weight: bold;
+    font-size: 20px;
+    color: var(--danger-color);
+    position: absolute;
+    right: 35px; /* Moves it away from the dropdown arrow */
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
 }
 
-.title-and-search-wrapper {
-    /* Changed to 'wrap' to allow music controls to drop below on small screens */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap; 
-    gap: 15px; /* Space between the title/search and music controls */
+.select2-container--default .select2-selection--single .select2-selection__clear:hover {
+    color: #b71c1c;
 }
 
-/* ------------------------------------------- */
-/* --- 2. CODE SEARCH COMPONENT & INPUTS --- */
-/* ------------------------------------------- */
-
-.code-search-component {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 16px 12px 12px;
-    background-color: #f7f7f7;
-    border-radius: 18px;
-    box-sizing: border-box;
-}
-
-#codeInput {
-    flex-grow: 1;
-    width: 250px;
-    padding: 12px 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 14px;
-    font-size: 16px;
-    background-color: white;
-    color: #333;
-}
-
-#codeInput::placeholder {
-    color: #a0a0a0;
-}
-
-#codeInput:focus {
-    border-color: #26a8d8;
+/* Highlight the search box inside dropdown */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 2px solid var(--blue-accent) !important;
+    border-radius: 8px; 
+    padding: 8px !important; 
     outline: none;
 }
 
-/* ------------------------------------------- */
-/* --- 3. AUDIO CONTROLS (MINIMAL UPDATE) --- */
-/* ------------------------------------------- */
-
-.music-controls {
-    /* Making this a small, clean box */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px; /* Fixed width */
-    height: 60px; /* Fixed height to make it a square/circle */
-    background-color: #f7f7f7;
-    border-radius: 50%; /* Make it a circle */
-    box-sizing: border-box;
-    padding: 0;
-    flex-shrink: 0;
+/* Highlight color for selected items in list */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--primary-color) !important;
 }
 
-.music-icon-style {
-    font-size: 28px; /* Large enough to be clearly visible */
-    color: #333;
-    cursor: pointer;
-    line-height: 1; /* Ensure vertical centering */
-    transition: color 0.2s, transform 0.2s;
+.select2-selection__rendered {
+    font-weight: 700 !important; 
+    color: #333 !important; 
+    padding-left: 15px !important;
 }
 
-.music-icon-style:hover {
-    color: #70b34f; /* Green color on hover */
-    transform: scale(1.1);
+/* --- Search Component --- */
+.code-search-component {
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    padding: 12px;
+    background-color: var(--bg-light); 
+    border-radius: 18px; 
+    margin-bottom: 20px;
 }
 
-/* ------------------------------------------- */
-/* --- 4. DROPDOWN CONTAINERS (SMALL BOXES) --- */
-/* ------------------------------------------- */
-
-.small-box-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    /* FINAL FIX: Ensure the entire container has bottom margin */
-    margin-bottom: 40px;
-}
-
-.small-box {
-    background: #f7f7f7;
-    padding: 25px; /* Restored original padding */
-    border-radius: 18px;
-    flex: 1;
-    min-width: 300px;
-    box-sizing: border-box;
-    border: 1px solid #f0f0f0;
-    /* FINAL FIX: Add margin to the bottom of each small box for stacking space */
-    margin-bottom: 25px; 
-}
-
-/* Clear margin for the last row of small boxes in the container */
-.small-box-container:last-child .small-box {
-    margin-bottom: 0;
-}
-
-
-label {
-    display: block;
-    margin-bottom: 12px;
-    font-size: 18px;
-    color: #555;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Select2 styles */
-.select2-container {
-    width: 100% !important;
-}
-
-.select2-container--default .select2-selection--single {
-    height: 50px;
-    padding: 0;
-    border-radius: 12px;
-    font-size: 16px;
+#codeInput {
+    flex-grow: 1; 
+    padding: 12px 20px; 
     border: 1px solid #e0e0e0;
-    background-color: white;
-    display: flex;
-    align-items: center;
+    border-radius: 14px; 
+    font-size: 16px; 
+    font-weight: 700;
 }
 
-.select2-container--default
-    .select2-selection--single
-    .select2-selection__rendered {
-    color: #333;
-    text-align: left;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    padding: 10px 40px 10px 20px;
-    line-height: 25px;
-    margin: 0 !important;
-    flex-grow: 1;
+#codeInput:focus {
+    border-color: var(--blue-accent);
+    outline: none;
 }
 
-/* ------------------------------------------- */
-/* --- 5. OUTPUT CONTAINER (FINAL LAYOUT) --- */
-/* ------------------------------------------- */
-
+/* --- Output Container Layout --- */
 .final-output-container {
     display: flex;
     justify-content: space-between;
-    gap: 25px;
-    text-align: left;
+    gap: 15px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
 }
 
-.address-output-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 25px;
-    background-color: #e0f2fe;
-    border-radius: 15px;
-    border: 1px solid #a7d9f7;
-    flex: 2; /* 2/3 of the space */
-    min-height: 80px;
-    box-sizing: border-box;
-}
-
-.address-text-content {
-    flex-grow: 1;
-    padding-right: 15px;
-}
-
-.address-prefix {
-    font-weight: bold;
-    margin-right: 10px;
-    font-size: 16px;
-    white-space: nowrap;
-}
-
-#addressContent {
-    font-weight: 500;
-    color: #333;
-    font-size: 16px;
-    line-height: 1.4;
-    display: inline;
-}
-
-.address-output-box .copy-button {
-    margin-left: auto;
-    flex-shrink: 0;
-}
-
-.code-output-box {
-    display: flex;
-    align-items: center;
-    padding: 15px 25px;
-    background-color: #e0f2fe;
-    border-radius: 15px;
-    border: 1px solid #a7d9f7;
-    flex: 1; /* 1/3 of the space */
-    min-height: 80px;
-    box-sizing: border-box;
+/* --- Output Boxes --- */
+.address-output-box, .code-output-box {
+    background-color: #e3f2fd; 
+    border: 1px solid #bbdefb;
+    border-radius: 15px; 
+    padding: 15px 25px; 
+    display: flex; 
+    align-items: center; 
     justify-content: space-between;
 }
 
-/* ------------------------------------------- */
-/* --- 6. BUTTON STYLES (FINAL & CORRECT) --- */
-/* ------------------------------------------- */
+.address-output-box { flex: 2; }
+.code-output-box { flex: 1; }
 
-.copy-button {
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.3s;
-    white-space: nowrap;
-    flex-shrink: 0;
-    box-shadow: none;
-    position: relative;
-    top: 0;
-    cursor: pointer;
-}
+.address-prefix, .code-prefix { font-weight: 700; font-size: 18px; color: #000; }
+#addressContent, #codeContent { font-weight: 700; font-size: 18px; color: #000; }
 
-.blue-button {
-    background-color: #70b34f; /* Green color */
-    color: white;
-}
-
-.green-button {
-    background-color: #70b34f;
-    color: white;
+/* --- Buttons --- */
+.green-button, .blue-button, .copy-button {
+    background-color: var(--primary-color);
+    color: white; 
+    border: none; 
     padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    box-shadow: none;
-    position: relative;
-    top: 0;
-    cursor: pointer;
-    border: none;
+    border-radius: 8px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: 0.2s;
 }
 
-.copy-button:disabled,
-.green-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    color: #777;
-    box-shadow: none;
-    top: 0;
+.copy-button:hover { 
+    filter: brightness(1.1); 
+    transform: translateY(-1px);
 }
 
-/* ------------------------------------------- */
-/* --- 7. RESPONSIVE DESIGN (FINAL LAYOUT) --- */
-/* ------------------------------------------- */
+.copy-button:active {
+    transform: translateY(0px);
+}
 
+/* --- UTILITY --- */
+.hidden { 
+    display: none !important; 
+}
+
+/* --- RESPONSIVE DESIGN --- */
 @media (max-width: 900px) {
-    .big-box {
-        padding: 20px;
-        margin: 15px;
-    }
-
-    h2 {
-        font-size: 26px;
-        /* Ensure H2 is full width and music controls drop below */
-        flex-basis: 100%; 
-    }
-
-    /* Stack sections vertically and increase spacing (gap) */
-    .title-and-search-wrapper,
     .final-output-container {
         flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
     }
-    
-    /* Ensure search and music controls are 100% width on mobile */
-    .code-search-component,
-    .music-controls {
-        flex-basis: 100%;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    /* Music controls layout on mobile */
-    .music-controls {
-        height: 50px; /* Slightly smaller on mobile */
-        border-radius: 12px; /* Square/rectangle on mobile */
-    }
-    
-    .music-icon-style {
-        font-size: 24px;
-    }
-
-    /* Small box container spacing fix */
-    .small-box-container {
-        flex-direction: column;
-        gap: 15px; /* Increased gap between dropdown boxes */
-        align-items: stretch;
-    }
-
-    /* Search component sizing fix */
-    .code-search-component {
-        gap: 10px;
-        padding: 18px;
-    }
-
-    #codeInput {
-        padding: 14px 12px;
-        flex-grow: 1;
-        min-width: 0;
-    }
-
-    .green-button {
-        padding: 10px 14px; /* Small button on mobile */
-        font-size: 14px;
-    }
-
-    .small-box {
-        min-width: 100%;
-        padding: 18px;
-        /* Remove bottom margin inside the media query, as the container gap handles it */
-        margin-bottom: 0; 
-    }
-
-    .address-output-box,
-    .code-output-box {
-        padding: 18px;
-        flex: 1 1 100%;
-        min-height: unset;
-    }
-
-    .address-output-box {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        height: auto;
-        min-height: 0px;
-    }
-
-    .address-text-content {
-        flex-basis: auto;
-        flex-grow: 1;
-        padding-right: 15px;
-        overflow: hidden;
-        display: block;
-    }
-
-    .address-output-box .copy-button {
-        margin-left: auto;
-        align-self: center;
+    .big-box {
+        padding: 30px 20px;
     }
 }
 
-/* ------------------------------------------- */
-/* --- 8. UTILITY STYLES --- */
-/* ------------------------------------------- */
-
-.hidden {
-    display: none !important;
+@media (max-width: 600px) {
+    h2 { font-size: 24px; }
+    .address-output-box, .code-output-box {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    .copy-button { width: 100%; }
 }
