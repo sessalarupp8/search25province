@@ -1,5 +1,3 @@
-// --- Utility Helpers ---
-
 export function isNumericString(s) {
     return typeof s === "string" && /^\d+$/.test(s);
 }

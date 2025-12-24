@@ -16,22 +16,30 @@ export async function loadGeographicalData() {
     return {
         provinces: khetData.map(item => ({
             id: isNumericString(toStr(item.id)) ? padLeft(item.id, 2) : toStr(item.id),
-            name: item.khmer_name || item.english_name || `Province ${item.id}`
+            khmer_name: item.khmer_name,
+            name: item.english_name || `Province ${item.id}`,
+            class: item.class || "" // Added
         })),
         districts: srokData.map(item => ({
             id: toStr(item.id),
-            name: item.khmer_name || item.english_name || `District ${item.id}`,
-            provinceId: deriveParentsFromId(item.id).provinceId || padLeft(item.class, 2)
+            khmer_name: item.khmer_name,
+            name: item.english_name || `District ${item.id}`,
+            provinceId: deriveParentsFromId(item.id).provinceId,
+            class: item.class || "" // Added
         })),
         communes: khumData.map(item => ({
             id: toStr(item.id),
-            name: item.khmer_name || item.english_name || `Commune ${item.id}`,
-            districtId: deriveParentsFromId(item.id).districtId || padLeft(item.class, 4)
+            khmer_name: item.khmer_name,
+            name: item.english_name || `Commune ${item.id}`,
+            districtId: deriveParentsFromId(item.id).districtId,
+            class: item.class || "" // Added
         })),
         villages: phumData.map(item => ({
             id: toStr(item.id),
-            name: item.khmer_name || item.english_name || `Village ${item.id}`,
-            communeId: deriveParentsFromId(item.id).communeId || padLeft(item.class, 6)
+            khmer_name: item.khmer_name,
+            name: item.english_name || `Village ${item.id}`,
+            communeId: deriveParentsFromId(item.id).communeId,
+            class: item.class || "" // Added
         }))
     };
 }
