@@ -21,13 +21,13 @@ $(document).ready(async function () {
     const toggleMusic = setupMusicPlayer(document.getElementById('backgroundMusic'), $musicToggleIcon);
     $musicToggleIcon.on("click", toggleMusic);
 
-    // --- Helper: Reset Select2 State & Clear Search ---
+    // --- Helpers ---
+
     function resetSelect($el, placeholderText) {
         $el.empty().append(new Option(placeholderText, ""));
         $el.val(null).trigger("change.select2"); 
     }
 
-    // --- Helper: Initialize Select2 ---
     function setupSelect2($select) {
         if ($select.hasClass("select2-hidden-accessible")) $select.select2("destroy");
         $select.select2({
@@ -38,20 +38,45 @@ $(document).ready(async function () {
         });
     }
 
+    /**
+     * Helper to combine Class + Name (e.g., "ភូមិ" + "កំបូល")
+     */
+    function formatNameWithClass(item) {
+        if (!item) return "";
+        const className = item.class ? item.class.trim() : "";
+        const itemName = (item.khmer_name || item.name || "").trim();
+        return `${className} ${itemName}`.trim();
+    }
+
     // --- Logic: Update Result UI & Sync ID ---
     function updateFullAddress() {
-        // If we are currently populating via the "Search" button, don't clear the input
         if (isProgrammaticSelection) return;
         
         let parts = [], finalCode = DEFAULT_CODE_TEXT;
         const pVal = $province.val(), dVal = $district.val(), 
               cVal = $commune.val(), vVal = $village.val();
 
-        // Check values bottom-up to determine the most specific current ID
-        if (vVal) { parts.push($village.find("option:selected").text()); finalCode = vVal; }
-        if (cVal) { parts.push($commune.find("option:selected").text()); if (finalCode === DEFAULT_CODE_TEXT) finalCode = cVal; }
-        if (dVal) { parts.push($district.find("option:selected").text()); if (finalCode === DEFAULT_CODE_TEXT) finalCode = dVal; }
-        if (pVal) { parts.push($province.find("option:selected").text()); if (finalCode === DEFAULT_CODE_TEXT) finalCode = pVal; }
+        // We find the objects in the DB to access the "class" property
+        if (vVal) { 
+            const item = db.villages.find(i => i.id === vVal);
+            parts.push(formatNameWithClass(item)); 
+            finalCode = vVal; 
+        }
+        if (cVal) { 
+            const item = db.communes.find(i => i.id === cVal);
+            parts.push(formatNameWithClass(item)); 
+            if (finalCode === DEFAULT_CODE_TEXT) finalCode = cVal; 
+        }
+        if (dVal) { 
+            const item = db.districts.find(i => i.id === dVal);
+            parts.push(formatNameWithClass(item)); 
+            if (finalCode === DEFAULT_CODE_TEXT) finalCode = dVal; 
+        }
+        if (pVal) { 
+            const item = db.provinces.find(i => i.id === pVal);
+            parts.push(formatNameWithClass(item)); 
+            if (finalCode === DEFAULT_CODE_TEXT) finalCode = pVal; 
+        }
 
         if (parts.length > 0 && pVal) {
             $addressContent.text(parts.join(', '));
@@ -67,77 +92,73 @@ $(document).ready(async function () {
     // --- Data Load & Init ---
     try {
         db = await loadGeographicalData();
-        $province.empty().append(new Option("សូមជ្រើសរើសរាជធានី / ខេត្ត", ""));
-        db.provinces.forEach(p => $province.append(new Option(p.name, p.id)));
+        $province.empty().append(new Option("សូមជ្រើសរើស រាជធានី / ខេត្ត", ""));
+        db.provinces.forEach(p => $province.append(new Option(p.khmer_name || p.name, p.id)));
         [$province, $district, $commune, $village].forEach(setupSelect2);
         attachHandlers();
     } catch (e) { console.error("Load Error:", e); }
 
     function attachHandlers() {
-        // --- 1. HANDLE "X" DELETE ON ALL 4 BOXES ---
         [$province, $district, $commune, $village].forEach($el => {
             $el.on("select2:clear", function () {
                 setTimeout(() => {
                     const id = $el.attr('id');
-                    // Reset the search input immediately when any "X" is pressed
                     $codeInput.val(""); 
 
                     if (id === 'provinceSelect') {
-                        resetSelect($district, "សូមជ្រើសរើសស្រុក / ខណ្ឌ");
-                        resetSelect($commune, "សូមជ្រើសរើសឃុំ / សង្កាត់");
-                        resetSelect($village, "សូមជ្រើសរើសភូមិ / ក្រុម");
+                        resetSelect($district, "សូមជ្រើសរើស ក្រុង / ស្រុក / ខណ្ឌ");
+                        resetSelect($commune, "សូមជ្រើសរើស ឃុំ / សង្កាត់");
+                        resetSelect($village, "សូមជ្រើសរើស ភូមិ");
                     } else if (id === 'districtSelect') {
-                        resetSelect($commune, "សូមជ្រើសរើសឃុំ / សង្កាត់");
-                        resetSelect($village, "សូមជ្រើសរើសភូមិ / ក្រុម");
+                        resetSelect($commune, "សូមជ្រើសរើស ឃុំ / សង្កាត់");
+                        resetSelect($village, "សូមជ្រើសរើស ភូមិ");
                     } else if (id === 'communeSelect') {
-                        resetSelect($village, "សូមជ្រើសរើសភូមិ / ក្រុម");
+                        resetSelect($village, "សូមជ្រើសរើស ភូមិ");
                     }
                     updateFullAddress();
                 }, 10);
             });
         });
 
-        // --- 2. HANDLE NEW CHOICE IN ALL 4 BOXES ---
         $province.on("change", function() {
             if (isProgrammaticSelection) return;
-            $codeInput.val(""); // Reset Search ID on new choice
+            $codeInput.val(""); 
             const pid = $(this).val();
             resetSelect($district, "សូមជ្រើសរើសស្រុក / ខណ្ឌ");
             resetSelect($commune, "សូមជ្រើសរើសឃុំ / សង្កាត់");
-            resetSelect($village, "សូមជ្រើសរើសភូមិ / ក្រុម");
-            if (pid) db.districts.filter(d => d.provinceId === pid).forEach(d => $district.append(new Option(d.name, d.id)));
+            resetSelect($village, "សូមជ្រើសរើសភូមិ");
+            if (pid) db.districts.filter(d => d.provinceId === pid).forEach(d => $district.append(new Option(d.khmer_name || d.name, d.id)));
             setupSelect2($district);
             updateFullAddress();
         });
 
         $district.on("change", function() {
             if (isProgrammaticSelection) return;
-            $codeInput.val(""); // Reset Search ID on new choice
+            $codeInput.val(""); 
             const did = $(this).val();
             resetSelect($commune, "សូមជ្រើសរើសឃុំ / សង្កាត់");
-            resetSelect($village, "សូមជ្រើសរើសភូមិ / ក្រុម");
-            if (did) db.communes.filter(c => c.districtId === did).forEach(c => $commune.append(new Option(c.name, c.id)));
+            resetSelect($village, "សូមជ្រើសរើសភូមិ");
+            if (did) db.communes.filter(c => c.districtId === did).forEach(c => $commune.append(new Option(c.khmer_name || c.name, c.id)));
             setupSelect2($commune);
             updateFullAddress();
         });
 
         $commune.on("change", function() {
             if (isProgrammaticSelection) return;
-            $codeInput.val(""); // Reset Search ID on new choice
+            $codeInput.val(""); 
             const cid = $(this).val();
-            resetSelect($village, "សូមជ្រើសរើសភូមិ / ក្រុម");
-            if (cid) db.villages.filter(v => v.communeId === cid).forEach(v => $village.append(new Option(v.name, v.id)));
+            resetSelect($village, "សូមជ្រើសរើសភូមិ");
+            if (cid) db.villages.filter(v => v.communeId === cid).forEach(v => $village.append(new Option(v.khmer_name || v.name, v.id)));
             setupSelect2($village);
             updateFullAddress();
         });
 
         $village.on("change", function() {
              if (isProgrammaticSelection) return;
-             $codeInput.val(""); // Reset Search ID on new choice
+             $codeInput.val(""); 
              updateFullAddress();
         });
 
-        // --- 3. SEARCH LOGIC ---
         $lookupButton.on("click", lookupCode);
         $codeInput.on("input", function() { 
             if (!$(this).val()) {
@@ -156,19 +177,19 @@ $(document).ready(async function () {
         const res = findInDb(code);
         if (res) {
             isProgrammaticSelection = true;
-            // Populate all dropdowns based on the search ID
+            
             $province.val(res.pId).trigger("change.select2");
             
             $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", ""));
-            db.districts.filter(d => d.provinceId === res.pId).forEach(d => $district.append(new Option(d.name, d.id)));
+            db.districts.filter(d => d.provinceId === res.pId).forEach(d => $district.append(new Option(d.khmer_name || d.name, d.id)));
             $district.val(res.dId).trigger("change.select2");
 
             $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", ""));
-            if (res.dId) db.communes.filter(c => c.districtId === res.dId).forEach(c => $commune.append(new Option(c.name, c.id)));
+            if (res.dId) db.communes.filter(c => c.districtId === res.dId).forEach(c => $commune.append(new Option(c.khmer_name || c.name, c.id)));
             $commune.val(res.cId).trigger("change.select2");
 
-            $village.empty().append(new Option("សូមជ្រើសរើសភូមិ / ក្រុម", ""));
-            if (res.cId) db.villages.filter(v => v.communeId === res.cId).forEach(v => $village.append(new Option(v.name, v.id)));
+            $village.empty().append(new Option("សូមជ្រើសរើសភូមិ", ""));
+            if (res.cId) db.villages.filter(v => v.communeId === res.cId).forEach(v => $village.append(new Option(v.khmer_name || v.name, v.id)));
             if (res.vId) $village.val(res.vId).trigger("change.select2");
             
             $addressContent.text(res.fullAddress);
@@ -184,21 +205,30 @@ $(document).ready(async function () {
             const c = db.communes.find(i => i.id === v.communeId);
             const d = db.districts.find(i => i.id === c?.districtId);
             const p = db.provinces.find(i => i.id === d?.provinceId);
-            return { fullAddress: `${v.name}, ${c.name}, ${d.name}, ${p.name}`, pId: p.id, dId: d.id, cId: c.id, vId: v.id };
+            return { 
+                fullAddress: `${formatNameWithClass(v)}, ${formatNameWithClass(c)}, ${formatNameWithClass(d)}, ${formatNameWithClass(p)}`, 
+                pId: p.id, dId: d.id, cId: c.id, vId: v.id 
+            };
         }
         const c = db.communes.find(i => i.id === code);
         if (c) {
             const d = db.districts.find(i => i.id === c.districtId);
             const p = db.provinces.find(i => i.id === d?.provinceId);
-            return { fullAddress: `${c.name}, ${d.name}, ${p.name}`, pId: p.id, dId: d.id, cId: c.id, vId: null };
+            return { 
+                fullAddress: `${formatNameWithClass(c)}, ${formatNameWithClass(d)}, ${formatNameWithClass(p)}`, 
+                pId: p.id, dId: d.id, cId: c.id, vId: null 
+            };
         }
         const d = db.districts.find(i => i.id === code);
         if (d) {
             const p = db.provinces.find(i => i.id === d.provinceId);
-            return { fullAddress: `${d.name}, ${p.name}`, pId: p.id, dId: d.id, cId: null, vId: null };
+            return { 
+                fullAddress: `${formatNameWithClass(d)}, ${formatNameWithClass(p)}`, 
+                pId: p.id, dId: d.id, cId: null, vId: null 
+            };
         }
         const p = db.provinces.find(i => i.id === code);
-        if (p) return { fullAddress: p.name, pId: p.id, dId: null, cId: null, vId: null };
+        if (p) return { fullAddress: formatNameWithClass(p), pId: p.id, dId: null, cId: null, vId: null };
         return null;
     }
 });
