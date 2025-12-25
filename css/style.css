@@ -10,7 +10,7 @@
 }
 
 body {
-    font-family: 'Battambang', "Khmer OS Battambang", sans-serif;
+    font-family: "Khmer OS Battambang", 'Battambang', sans-serif;
     background: #50b4c8;
     margin: 0; 
     min-height: 100vh; 
@@ -21,20 +21,20 @@ body {
 
 .big-box {
     background: white; 
-    padding: 50px; 
-    border-radius: 20px;
+    padding: 80px; 
+    border-radius: 40px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     width: 95%; 
-    max-width: 1000px; 
+    max-width: 1200px; 
     text-align: center;
 }
 
-/* --- Select2 Colorbox Styling (Updated to Gray) --- */
+/* --- Select2 Colorbox Styling --- */
 .select2-container--default .select2-selection--single {
     height: 50px !important; 
     border-radius: 12px !important;
     border: 1px solid var(--border-gray) !important; 
-    background-color: var(--bg-gray-input) !important; /* Makes 4 boxes gray */
+    background-color: var(--bg-gray-input) !important; 
     display: flex; 
     align-items: center;
     position: relative;
@@ -88,7 +88,7 @@ body {
     border-radius: 14px; 
     font-size: 16px; 
     font-weight: 700;
-    background-color: var(--bg-gray-input); /* Makes top search bar gray */
+    background-color: var(--bg-gray-input); 
 }
 
 /* --- Output Container Layout --- */
@@ -99,37 +99,63 @@ body {
     margin-top: 20px;
 }
 
-/* --- Output Boxes (Updated to Gray Theme) --- */
+/* --- Output Boxes (Updated for Perfect Centering) --- */
 .address-output-box, .code-output-box {
     background-color: var(--bg-gray-input); 
     border: 1px solid var(--border-gray);
-    border-radius: 15px; 
-    padding: 15px 25px; 
+    border-radius: 20px; 
+    padding: 20px 15px; 
     display: flex; 
+    flex-direction: column; 
     align-items: center; 
-    justify-content: space-between;
+    /* Changed from space-between to center to match the ID box style */
+    justify-content: center; 
+    flex: 1; 
+    min-height: 160px; 
+    text-align: center;
 }
 
-.address-output-box { flex: 2; }
-.code-output-box { flex: 1; }
+/* Labels: Small and Bold */
+.address-prefix, .code-prefix { 
+    font-weight: 700; 
+    font-size: 15px; 
+    color: #444; 
+    margin-bottom: 5px; /* Reduced margin to keep label close to content */
+}
 
-.address-prefix, .code-prefix { font-weight: 700; font-size: 18px; color: #000; }
-#addressContent, #codeContent { font-weight: 700; font-size: 18px; color: #000; }
+/* Content: Smaller and Not Bold */
+#addressContent, #addressContentEn, #codeContent { 
+    font-weight: 400; 
+    font-size: 16px; 
+    color: #000;
+    margin-bottom: 15px; /* Space between content and the button */
+    line-height: 1.5;
+    width: 100%;
+    display: block;
+}
 
-/* --- Buttons --- */
+/* Specific adjustment for English text scaling */
+#addressContentEn {
+    font-size: 15px; 
+}
+
+/* --- Buttons: Pill Shaped and Smaller Text --- */
 .green-button, .blue-button, .copy-button {
     background-color: var(--primary-color);
     color: white; 
     border: none; 
-    padding: 10px 20px;
-    border-radius: 8px; 
+    padding: 8px 16px;
+    border-radius: 10px; 
     font-weight: 700; 
+    font-size: 13px;
     cursor: pointer;
-    transition: filter 0.2s;
+    transition: all 0.2s ease;
+    width: 110px; 
 }
 
-.green-button:hover, .copy-button:hover {
+.copy-button:hover {
     filter: brightness(0.9);
+    transform: translateY(-1px);
 }
 
 .hidden { display: none !important; }
@@ -147,6 +173,7 @@ body {
 
     .final-output-container {
         flex-direction: column;
+        gap: 15px;
     }
 }
 
@@ -157,6 +184,7 @@ body {
         flex-direction: column;
         text-align: center;
         gap: 10px;
+        min-height: auto;
     }
     
     .copy-button { 

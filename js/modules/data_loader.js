@@ -18,28 +18,28 @@ export async function loadGeographicalData() {
             id: isNumericString(toStr(item.id)) ? padLeft(item.id, 2) : toStr(item.id),
             khmer_name: item.khmer_name,
             name: item.english_name || `Province ${item.id}`,
-            class: item.class || "" // Added
+            class: item.class || ""
         })),
         districts: srokData.map(item => ({
             id: toStr(item.id),
             khmer_name: item.khmer_name,
             name: item.english_name || `District ${item.id}`,
             provinceId: deriveParentsFromId(item.id).provinceId,
-            class: item.class || "" // Added
+            class: item.class || ""
         })),
         communes: khumData.map(item => ({
             id: toStr(item.id),
             khmer_name: item.khmer_name,
             name: item.english_name || `Commune ${item.id}`,
             districtId: deriveParentsFromId(item.id).districtId,
-            class: item.class || "" // Added
+            class: item.class || ""
         })),
         villages: phumData.map(item => ({
             id: toStr(item.id),
             khmer_name: item.khmer_name,
             name: item.english_name || `Village ${item.id}`,
             communeId: deriveParentsFromId(item.id).communeId,
-            class: item.class || "" // Added
+            class: item.class || ""
         }))
     };
 }
