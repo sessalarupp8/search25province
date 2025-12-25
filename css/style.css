@@ -10,7 +10,7 @@
 }
 
 body {
-    font-family: "Khmer OS", "Khmer OS Siemreap", "Khmer OS Battambang", 'Battambang', sans-serif;
+    font-family: Khmer OS Battambang, Khmer OS Siemreap, sans-serif, Arial;
     background: #50b4c8;
     margin: 0; 
     min-height: 100vh; 
