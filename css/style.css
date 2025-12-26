@@ -17,16 +17,21 @@ body {
     display: flex; 
     justify-content: center; 
     align-items: center;
+    /* Prevents the "moving to the right" issue on mobile */
+    overflow-x: hidden; 
+    width: 100%;
 }
 
 .big-box {
     background: white; 
-    padding: 50px; 
+    padding: 60px 40px; 
     border-radius: 40px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    width: 95%; 
+    width: 90%; 
     max-width: 1200px; 
     text-align: center;
+    /* Ensures padding doesn't push the box wider than the screen */
+    box-sizing: border-box;
 }
 
 /* --- Select2 Colorbox Styling --- */
@@ -95,51 +100,51 @@ body {
 .final-output-container {
     display: flex;
     justify-content: space-between;
-    gap: 15px;
+    gap: 20px;
     margin-top: 20px;
 }
 
 /* --- Output Boxes --- */
-/* Output Boxes: Increased vertical padding */
 .address-output-box, .code-output-box {
     background-color: var(--bg-gray-input); 
-    border: 5px solid var(--border-gray);
-    border-radius: 50px; 
-    padding: 25px 20px; /* Increased top/bottom from 20px to 35px */
+    border: 1px solid var(--border-gray);
+    border-radius: 25px; 
+    padding: 35px 20px; /* More vertical space */
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     justify-content: center; 
     flex: 1; 
-    min-height: 80px; /* Slightly increased to accommodate larger text */
+    min-height: 180px; 
     text-align: center;
+    box-sizing: border-box;
 }
 
-/* Labels: Small and Bold */
+/* Labels: Bigger and Bold (Red as per screenshot) */
 .address-prefix, .code-prefix { 
     font-weight: 700; 
-    font-size: 15px; 
-    color: red; 
-    margin-bottom: 5px; 
+    font-size: 18px; 
+    color: var(--danger-color); /* Changed to red to match image */
+    margin-bottom: 12px; /* More space below label */
 }
 
-/* Content: Smaller and Not Bold */
+/* Content: Larger Khmer font and improved line height */
 #addressContent, #addressContentEn, #codeContent { 
     font-weight: 400; 
-    font-size: 16px; 
+    font-size: 19px; 
     color: #000;
     margin-bottom: 15px; 
-    line-height: 1.5;
+    line-height: 1.8; /* Extra space for Khmer subscripts */
     width: 100%;
     display: block;
 }
 
 /* Specific adjustment for English text scaling */
 #addressContentEn {
-    font-size: 14px; 
+    font-size: 16px; 
 }
 
-/* Specific styling for bolded classes (Phum, Sangkat, etc.) */
+/* Specific styling for bolded classes */
 #addressContent b, #addressContentEn b {
     font-weight: 700;
     color: #000;
@@ -150,15 +155,14 @@ body {
     background-color: var(--primary-color);
     color: white; 
     border: none; 
-    padding: 8px 16px;
-    border-radius: 10px; 
+    padding: 10px 20px;
+    border-radius: 12px; 
     font-weight: 700; 
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-    width: 150px; 
+    width: 140px; 
 }
-
 
 .blue-button {
     background-color: var(--blue-accent);
@@ -167,7 +171,6 @@ body {
 .copy-button:hover {
     filter: brightness(0.9);
     transform: translateY(-1px);
-    width: 100%;
 }
 
 .btn-success {
@@ -180,10 +183,10 @@ body {
 
 @media (max-width: 900px) {
     .big-box {
-        padding: 50px 80px;
-        border-radius: 0 !important; 
-        width: 100%; 
-        margin: 0;
+        padding: 30px 15px;
+        border-radius: 20px !important; 
+        width: 95%; 
+        margin: 10px auto;
         box-shadow: none;
     }
 
@@ -197,13 +200,20 @@ body {
     h2 { font-size: 24px; }
     
     .address-output-box, .code-output-box {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
         min-height: auto;
+        padding: 30px 15px;
     }
     
+    .address-prefix, .code-prefix {
+        font-size: 20px; /* Make label even bigger on mobile */
+    }
+
+    #addressContent {
+        font-size: 20px; /* Better Khmer readability on small screens */
+    }
+
     .copy-button { 
         width: 100%; 
+        max-width: 250px;
     }
 }
