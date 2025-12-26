@@ -21,7 +21,7 @@ body {
 
 .big-box {
     background: white; 
-    padding: 80px; 
+    padding: 50px; 
     border-radius: 40px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     width: 95%; 
@@ -99,19 +99,19 @@ body {
     margin-top: 20px;
 }
 
-/* --- Output Boxes (Updated for Perfect Centering) --- */
+/* --- Output Boxes --- */
+/* Output Boxes: Increased vertical padding */
 .address-output-box, .code-output-box {
     background-color: var(--bg-gray-input); 
-    border: 1px solid var(--border-gray);
-    border-radius: 20px; 
-    padding: 20px 15px; 
+    border: 5px solid var(--border-gray);
+    border-radius: 50px; 
+    padding: 25px 20px; /* Increased top/bottom from 20px to 35px */
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    /* Changed from space-between to center to match the ID box style */
     justify-content: center; 
     flex: 1; 
-    min-height: 160px; 
+    min-height: 80px; /* Slightly increased to accommodate larger text */
     text-align: center;
 }
 
@@ -119,8 +119,8 @@ body {
 .address-prefix, .code-prefix { 
     font-weight: 700; 
     font-size: 15px; 
-    color: #444; 
-    margin-bottom: 5px; /* Reduced margin to keep label close to content */
+    color: red; 
+    margin-bottom: 5px; 
 }
 
 /* Content: Smaller and Not Bold */
@@ -128,7 +128,7 @@ body {
     font-weight: 400; 
     font-size: 16px; 
     color: #000;
-    margin-bottom: 15px; /* Space between content and the button */
+    margin-bottom: 15px; 
     line-height: 1.5;
     width: 100%;
     display: block;
@@ -136,10 +136,16 @@ body {
 
 /* Specific adjustment for English text scaling */
 #addressContentEn {
-    font-size: 15px; 
+    font-size: 14px; 
 }
 
-/* --- Buttons: Pill Shaped and Smaller Text --- */
+/* Specific styling for bolded classes (Phum, Sangkat, etc.) */
+#addressContent b, #addressContentEn b {
+    font-weight: 700;
+    color: #000;
+}
+
+/* --- Buttons --- */
 .green-button, .blue-button, .copy-button {
     background-color: var(--primary-color);
     color: white; 
@@ -150,12 +156,22 @@ body {
     font-size: 13px;
     cursor: pointer;
     transition: all 0.2s ease;
-    width: 110px; 
+    width: 150px; 
+}
+
+
+.blue-button {
+    background-color: var(--blue-accent);
 }
 
 .copy-button:hover {
     filter: brightness(0.9);
     transform: translateY(-1px);
+    width: 100%;
+}
+
+.btn-success {
+    background-color: #28a745 !important;
 }
 
 .hidden { display: none !important; }

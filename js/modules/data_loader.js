@@ -1,8 +1,5 @@
 import { toStr, isNumericString, padLeft, deriveParentsFromId } from './ui_utils.js';
 
-/**
- * Maps Khmer administrative classes to English terminology
- */
 const getClassEn = (khClass) => {
     const map = {
         "រាជធានី": "Capital City",
