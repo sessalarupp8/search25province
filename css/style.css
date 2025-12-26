@@ -78,8 +78,8 @@ body {
     display: flex; 
     align-items: center; 
     gap: 0; 
-    padding: 6px; 
-    background-color: #ffffff; /* Changed from blue/grey tint to White */
+    padding: 8px; 
+    background-color: var(--bg-gray-input); /* Changed from blue/grey tint to White */
     border-radius: 12px; /* Less round corner */
     margin-bottom: 20px;
     border: 1px solid var(--border-gray);
@@ -102,18 +102,13 @@ body {
     color: white; 
     border: none; 
     padding: 12px 25px; 
-    border-radius: 8px; /* Square-ish corners */
+    border-radius: 20px; /* Square-ish corners */
     font-weight: 700; 
     font-size: 14px;
     cursor: pointer;
-    transition: all 1s ease-in-out;
     white-space: nowrap; 
+    transition: all 1s ease-in-out;
     width: 115px;
-}
-
-.green-button {
-    width: auto; 
-    margin-left: 5px;
 }
 
 .blue-button {
@@ -123,8 +118,8 @@ body {
 .copy-button:hover {
     filter: brightness(0.9);
     transform: translateY(-1px);
-    width: 100%;
     
+    width: 100%;
 }
 
 .btn-success {
