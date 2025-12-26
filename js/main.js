@@ -21,20 +21,29 @@ $(document).ready(async function () {
   $musicToggleIcon.on("click", toggleMusic);
 
   // --- Helpers ---
-  function formatNameForDropdown(item) {
-    if (!item) return "";
-    const label = `${item.class || ""} ${item.khmer_name || ""}`.trim();
-    return item.name ? `${label} / ${item.name}` : label;
-  }
-
   function formatNameKhmerOnly(item) {
     if (!item) return "";
-    return `${item.class || ""} ${item.khmer_name || ""}`.trim();
+    return `<b>${item.classKh || ""}</b> ${item.khmer_name || ""}`.trim();
   }
 
   function formatNameEnglishOnly(item) {
     if (!item) return "";
-    return (item.name || "").trim();
+    return `<b>${item.classEn || ""}</b> ${item.name || ""}`.trim();
+  }
+
+  function formatNameForDropdown(item) {
+    if (!item) return "";
+    const kh = `${item.classKh || ""} ${item.khmer_name || ""}`.trim();
+    const en = `${item.classEn || ""} ${item.name || ""}`.trim();
+    return `${kh} / ${en}`;
+  }
+
+  function showCopyFeedback($btn) {
+    const originalContent = $btn.html();
+    $btn.html('✓ Copied!').addClass('btn-success').css('pointer-events', 'none');
+    setTimeout(() => {
+      $btn.html(originalContent).removeClass('btn-success').css('pointer-events', 'auto');
+    }, 2000);
   }
 
   function resetSelect($el, placeholderText) {
@@ -73,8 +82,9 @@ $(document).ready(async function () {
     });
 
     if (khParts.length > 0 && $province.val()) {
-      $addressContent.text(khParts.join(" "));
-      $addressContentEn.text(enParts.join(" "));
+      // Both now use .join(" ") to remove all commas
+      $addressContent.html(khParts.join(" "));      
+      $addressContentEn.html(enParts.join(" "));   
       $codeContent.text(finalCode);
       $outputContainer.removeClass("hidden");
     } else {
@@ -125,17 +135,29 @@ $(document).ready(async function () {
     $village.on("change", updateFullAddress);
     $lookupButton.on("click", lookupCode);
 
-    // --- Copy Buttons (Clean text, no labels) ---
+    // --- Copy Buttons ---
     $copyAddressButton.on("click", function () {
-      copyTextToClipboard($(this), $addressContent.text(), DEFAULT_ADDRESS_TEXT, DEFAULT_CODE_TEXT);
+      const text = $addressContent.text(); 
+      if (text !== DEFAULT_ADDRESS_TEXT) {
+        copyTextToClipboard($(this), text);
+        showCopyFeedback($(this));
+      }
     });
 
     $copyAddressButtonEn.on("click", function () {
-      copyTextToClipboard($(this), $addressContentEn.text(), "N/A", DEFAULT_CODE_TEXT);
+      const text = $addressContentEn.text(); 
+      if (text) {
+        copyTextToClipboard($(this), text);
+        showCopyFeedback($(this));
+      }
     });
 
     $copyCodeButton.on("click", function () { 
-      copyTextToClipboard($(this), $codeContent.text(), DEFAULT_ADDRESS_TEXT, DEFAULT_CODE_TEXT); 
+      const text = $codeContent.text();
+      if (text !== DEFAULT_CODE_TEXT) {
+        copyTextToClipboard($(this), text);
+        showCopyFeedback($(this));
+      }
     });
   }
 
@@ -146,41 +168,42 @@ $(document).ready(async function () {
     if (res) {
       isProgrammaticSelection = true;
       $province.val(res.pId).trigger("change.select2");
+      
       $district.empty().append(new Option("សូមជ្រើសរើសស្រុក / ខណ្ឌ", ""));
       db.districts.filter(d => d.provinceId === res.pId).forEach(d => $district.append(new Option(formatNameForDropdown(d), d.id)));
       $district.val(res.dId).trigger("change.select2");
+      
       $commune.empty().append(new Option("សូមជ្រើសរើសឃុំ / សង្កាត់", ""));
       if (res.dId) db.communes.filter(c => c.districtId === res.dId).forEach(c => $commune.append(new Option(formatNameForDropdown(c), c.id)));
       $commune.val(res.cId).trigger("change.select2");
+      
       $village.empty().append(new Option("សូមជ្រើសរើសភូមិ", ""));
       if (res.cId) db.villages.filter(v => v.communeId === res.cId).forEach(v => $village.append(new Option(formatNameForDropdown(v), v.id)));
       if (res.vId) $village.val(res.vId).trigger("change.select2");
       
-      $addressContent.text(res.khmerOnly);
-      $addressContentEn.text(res.englishOnly);
+      $addressContent.html(res.khmerOnly);
+      $addressContentEn.html(res.englishOnly);
       $codeContent.text(code);
       $outputContainer.removeClass("hidden");
-      isProgrammaticSelection = false;
+      
+      setTimeout(() => { isProgrammaticSelection = false; }, 100);
     }
   }
 
   function findInDb(code) {
     const v = db.villages.find(i => i.id === code);
-    if (v) {
-      const c = db.communes.find(i => i.id === v.communeId), d = db.districts.find(i => i.id === c?.districtId), p = db.provinces.find(i => i.id === d?.provinceId);
-      return { 
-        khmerOnly: `${formatNameKhmerOnly(v)} ${formatNameKhmerOnly(c)} ${formatNameKhmerOnly(d)} ${formatNameKhmerOnly(p)}`,
-        englishOnly: `${formatNameEnglishOnly(v)} ${formatNameEnglishOnly(c)} ${formatNameEnglishOnly(d)} ${formatNameEnglishOnly(p)}`,
-        pId: p.id, dId: d.id, cId: c.id, vId: v.id 
-      };
-    }
-    const c = db.communes.find(i => i.id === code);
+    const c = v ? db.communes.find(i => i.id === v.communeId) : db.communes.find(i => i.id === code);
+    
     if (c) {
-      const d = db.districts.find(i => i.id === c.districtId), p = db.provinces.find(i => i.id === d?.provinceId);
+      const d = db.districts.find(i => i.id === c.districtId);
+      const p = db.provinces.find(i => i.id === d?.provinceId);
+      const items = [v, c, d, p].filter(Boolean);
+
       return { 
-        khmerOnly: `${formatNameKhmerOnly(c)} ${formatNameKhmerOnly(d)} ${formatNameKhmerOnly(p)}`,
-        englishOnly: `${formatNameEnglishOnly(c)} ${formatNameEnglishOnly(d)} ${formatNameEnglishOnly(p)}`,
-        pId: p.id, dId: d.id, cId: c.id, vId: null 
+        khmerOnly: items.map(formatNameKhmerOnly).join(" "),
+        // Changed to join(" ") to remove commas
+        englishOnly: items.map(formatNameEnglishOnly).join(" "),
+        pId: p?.id, dId: d?.id, cId: c?.id, vId: v?.id 
       };
     }
     return null;
