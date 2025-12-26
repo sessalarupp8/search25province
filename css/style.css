@@ -17,19 +17,17 @@ body {
     display: flex; 
     justify-content: center; 
     align-items: center;
-    /* FIX: Prevents horizontal overflow on the whole page */
     overflow-x: hidden; 
 }
 
 .big-box {
     background: white; 
     padding: 50px; 
-    border-radius: 40px;
+    border-radius: 20px; /* Reduced roundness */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     width: 95%; 
     max-width: 1200px; 
     text-align: center;
-    /* FIX: Keeps the box from growing wider than the screen */
     box-sizing: border-box;
     margin: 20px auto;
 }
@@ -37,7 +35,7 @@ body {
 /* --- Select2 Colorbox Styling --- */
 .select2-container--default .select2-selection--single {
     height: 50px !important; 
-    border-radius: 12px !important;
+    border-radius: 10px !important;
     border: 1px solid var(--border-gray) !important; 
     background-color: var(--bg-gray-input) !important; 
     display: flex; 
@@ -75,26 +73,65 @@ body {
     background-color: transparent !important;
 }
 
-/* --- Search Component --- */
+/* --- Search Component (FIXED: Removed Blue Background) --- */
 .code-search-component {
     display: flex; 
     align-items: center; 
-    gap: 15px; 
-    padding: 12px;
-    background-color: var(--bg-light); 
-    border-radius: 18px; 
+    gap: 0; 
+    padding: 6px; 
+    background-color: #ffffff; /* Changed from blue/grey tint to White */
+    border-radius: 12px; /* Less round corner */
     margin-bottom: 20px;
+    border: 1px solid var(--border-gray);
+    overflow: hidden; 
 }
 
 #codeInput {
     flex-grow: 1; 
     padding: 12px 20px; 
-    border: 1px solid var(--border-gray);
-    border-radius: 14px; 
-    font-size: 16px; 
+    border: none !important; 
+    font-size: 18px; 
     font-weight: 700;
-    background-color: var(--bg-gray-input); 
+    background-color: transparent; /* Ensures it takes the white from container */
+    outline: none;
 }
+
+/* --- Buttons --- */
+.green-button, .blue-button, .copy-button {
+    background-color: var(--primary-color);
+    color: white; 
+    border: none; 
+    padding: 12px 25px; 
+    border-radius: 8px; /* Square-ish corners */
+    font-weight: 700; 
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 1s ease-in-out;
+    white-space: nowrap; 
+    width: 115px;
+}
+
+.green-button {
+    width: auto; 
+    margin-left: 5px;
+}
+
+.blue-button {
+    background-color: var(--blue-accent);
+}
+
+.copy-button:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+    width: 100%;
+    
+}
+
+.btn-success {
+    background-color: #28a745 !important;
+}
+
+.hidden { display: none !important; }
 
 /* --- Output Container Layout --- */
 .final-output-container {
@@ -107,8 +144,8 @@ body {
 /* --- Output Boxes --- */
 .address-output-box, .code-output-box {
     background-color: var(--bg-gray-input); 
-    border: 5px solid var(--border-gray);
-    border-radius: 50px; 
+    border: 2px solid var(--border-gray);
+    border-radius: 12px; /* Match search box roundness */
     padding: 25px 20px; 
     display: flex; 
     flex-direction: column; 
@@ -117,7 +154,6 @@ body {
     flex: 1; 
     min-height: 80px; 
     text-align: center;
-    /* FIX: Keeps inner boxes contained */
     box-sizing: border-box;
 }
 
@@ -129,7 +165,7 @@ body {
     margin-bottom: 5px; 
 }
 
-/* Content: Smaller and Not Bold */
+/* Content */
 #addressContent, #addressContentEn, #codeContent { 
     font-weight: 400; 
     font-size: 16px; 
@@ -140,52 +176,10 @@ body {
     display: block;
 }
 
-/* Specific adjustment for English text scaling */
-#addressContentEn {
-    font-size: 14px; 
-}
-
-/* Specific styling for bolded classes (Phum, Sangkat, etc.) */
-#addressContent b, #addressContentEn b {
-    font-weight: 700;
-    color: #000;
-}
-
-/* --- Buttons --- */
-.green-button, .blue-button, .copy-button {
-    background-color: var(--primary-color);
-    color: white; 
-    border: none; 
-    padding: 8px 16px;
-    border-radius: 10px; 
-    font-weight: 700; 
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 150px; 
-}
-
-.blue-button {
-    background-color: var(--blue-accent);
-}
-
-.copy-button:hover {
-    filter: brightness(0.9);
-    transform: translateY(-1px);
-    width: 100%;
-}
-
-.btn-success {
-    background-color: #28a745 !important;
-}
-
-.hidden { display: none !important; }
-
 /* --- RESPONSIVE DESIGN --- */
 
 @media (max-width: 900px) {
     .big-box {
-        /* FIX: Adjusted padding to keep content inside the box on mobile */
         padding: 30px 15px; 
         border-radius: 0 !important; 
         width: 100%; 
@@ -201,8 +195,6 @@ body {
 }
 
 @media (max-width: 600px) {
-    h2 { font-size: 24px; }
-    
     .address-output-box, .code-output-box {
         flex-direction: column;
         text-align: center;
@@ -210,7 +202,11 @@ body {
         min-height: auto;
     }
     
-    .copy-button { 
-        width: 100%; 
+    #codeInput {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .copy-button {
+        width: 80%;
     }
 }
